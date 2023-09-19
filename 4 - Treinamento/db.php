@@ -74,28 +74,6 @@ class db
             echo $row[$valor] . "\n";
         }
     }
-
-    public function atualizarEstoque($values, $id)
-    {
-        [$colunas, $valores] = $this->prepararDadosQuery($values, false);
-
-        $ok = pg_query($this->connection, "SELECT quantidade_est, id_est FROM estoque WHERE id_est = $id");
-        while ($row = pg_fetch_assoc($ok)) {
-            $quant = $row['quantidade_est'] . "\n"; //string
-        }
-        $quantidade = intval($quant) - intval($valores);
-
-        $registros = $this->prepararDadosUpdate($colunas, $quantidade);
-
-        $ok = pg_query($this->connection, "UPDATE estoque SET $registros WHERE id_est = $id");
-
-        if (!$ok) {
-            print("Falha ao tentar inserir no banco de dados \n \n");
-
-            readline('Pressione qualquer tecla para continuar');
-        }
-    }
-
     public function prepararDadosUpdate(array|string $colunas, array|string $valores)
     {
         $texto = "";
@@ -113,4 +91,55 @@ class db
 
         return $texto;
     }
+    public function vender($values, $id)
+    {
+        [$colunas, $valores] = $this->prepararDadosQuery($values, false);
+
+        //quantia do banco de dados
+        $ok = pg_query($this->connection, "SELECT quantidade_est, id_est FROM estoque WHERE id_est = $id");
+        while ($row = pg_fetch_assoc($ok)) {
+            $quant = $row['quantidade_est'] . "\n"; //string
+        }
+        $quantidade = intval($quant) - intval($valores);
+
+        $registros = $this->prepararDadosUpdate($colunas, $quantidade);
+
+        $ok = pg_query($this->connection, "UPDATE estoque SET $registros WHERE id_est = $id");
+
+        if (!$ok) {
+            print("Falha ao tentar inserir no banco de dados \n \n");
+
+            readline('Pressione qualquer tecla para continuar');
+        }
+    }
+    public function movimentar($table, $values, $id)
+    {
+        [$colunas, $valores] = $this->prepararDadosQuery($values);
+
+        $queryEstoque = pg_query($this->connection, "SELECT quantidade_est, id_est FROM estoque WHERE id_est = $id");
+        $queryEstoque = pg_fetch_all($queryEstoque);
+
+        if (!$queryEstoque[0]['quantidade_est']) {
+            print("Falha ao tentar inserir no banco de dados \n \n");
+
+            readline('Pressione qualquer tecla para continuar');
+        }
+
+        // Caso ele tente dar uma saida maior que a possivel, exemplo: estoque 0 - 50 - Implementar
+        if ($values['tipotransacao_mov'] == 'Entrada') {
+            $novaQuantidade = $queryEstoque[0]['quantidade_est'] + $values['quantidade_mov'];
+        } else {
+            $novaQuantidade = $queryEstoque[0]['quantidade_est'] - $novaQuantidade = $values['quantidade_mov'];
+        }
+
+        $okMov = pg_query($this->connection, "INSERT INTO $table ($colunas) VALUES ($valores)");
+        $okUpdate = pg_query($this->connection, "UPDATE estoque SET quantidade_est = $novaQuantidade WHERE id_est = $id");
+
+        if (!$okUpdate || $okMov) {
+            print("Falha ao tentar inserir no banco de dados \n \n");
+
+            readline('Pressione qualquer tecla para continuar');
+        }
+    }
+
 }

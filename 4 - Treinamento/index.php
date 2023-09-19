@@ -1,4 +1,4 @@
-<?php 
+<?php
 include_once('./db.php');
 
 $db = new db();
@@ -6,7 +6,7 @@ $db = new db();
 // Testa a conexão com o banco de dados
 
 $db->connect();
-echo "[1] Cadastro \n[2] Ler \n[3] Ler dado específico\nInsira: ";
+echo "[1] Cadastro \n[2] Estoque\n[3] Vender\nInsira: ";
 $selecionarMenu = readline();
 
 switch ($selecionarMenu) {
@@ -14,7 +14,7 @@ switch ($selecionarMenu) {
         cadastrar($db);
         break;
     case 2:
-        lerDados($db);
+        lerDadosEstoque($db);
         break;
     case 3:
         vender($db);
@@ -23,28 +23,41 @@ switch ($selecionarMenu) {
         # code...
         break;
 }
-function cadastrar($db){
-    echo "Insira o nome do livro:   ";
-    $nomeProduto_est = readline();
-    
+function cadastrar($db)
+{
+    echo "Insira o nome:   ";
+    $nome_est = readline();
+
     echo "Insira a quantidade: ";
     $quantidade_est = readline();
-    
-    
-    $db->cadastrar('estoque', ['nomeProduto_est' => $nomeProduto_est, 'quantidade_est' => $quantidade_est]);
-    
-}
 
-function vender($db){
     $today = (date("F j, Y, g:i a"));
-    $tipoMovimentacao_mov = "venda";
-    $quantidade_mov = 10;
-    $db->cadastrar('movimentacao', ['tipoMovimentacao_mov' => $tipoMovimentacao_mov, 'quantidade_mov' =>  $quantidade_mov, 'data_mov' => $today ]);
-}
-function lerDados($db){
-    $db->ler('estoque');
+    $db->cadastrar('estoque', ['nome_est' => $nome_est, 'quantidade_est' => $quantidade_est, 'data_ven' => $today]);
 
 }
-function lerDadoEspecifico($db){
-    $db->lerEspecifico('nomeProduto_est', 'estoque' );
+function vender($db)
+{
+    echo "Insira qual item deseja vender: ";
+    $id_est = readline();
+
+    echo "Insira a quantidade: ";
+    $quantidade_est = readline();
+
+    // echo "Insira o tipo de transaçao: ";
+    // $tipo = readline();
+
+    $db->atualizarEstoque(
+        ['quantidade_est' => $quantidade_est],
+        $id_est
+    );
+}
+function lerDadosEstoque($db)
+{
+    $db->lerEstoque('estoque');
+
+}
+
+function lerDadoEspecifico($db)
+{
+    $db->lerEspecifico('nomeProduto_est', 'estoque');
 }

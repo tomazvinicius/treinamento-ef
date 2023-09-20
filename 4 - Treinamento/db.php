@@ -1,5 +1,5 @@
 <?php
-
+include_once('./index.php');
 class db
 {
     private $host = "localhost";
@@ -37,44 +37,7 @@ class db
         }
         return [$colunas, $valores];
     }
-    public function cadastrar($table, $values)
-    {
-        [$colunas, $valores] = $this->prepararDadosQuery($values);
-
-        $ok = pg_query($this->connection, "INSERT INTO $table ($colunas) VALUES ($valores)");
-
-        if (!$ok) {
-            print("Falha ao tentar inserir no banco de dados \n \n");
-
-            readline('Pressione qualquer tecla para continuar');
-        }
-    }
-    public function lerEstoque($table)
-    {
-        $ok = pg_query($this->connection, "SELECT * FROM $table");
-
-        while ($row = pg_fetch_assoc($ok)) {
-            echo "\n";
-            echo "ID: " . $row['id_est'] . "\n";
-            echo "Nome: " . $row['nome_est'] . "\n";
-            echo "Quantidade: " . $row['quantidade_est'] . "\n";
-            echo "\n";
-        }
-        if (!$ok) {
-            print("Falha ao tentar ler no banco de dados \n \n");
-
-            readline('Pressione qualquer tecla para continuar');
-        }
-    }
-
-    public function lerEspecifico($valor, $table)
-    {
-        $ok = pg_query($this->connection, "SELECT $valor FROM $table");
-        while ($row = pg_fetch_assoc($ok)) {
-            echo $row[$valor] . "\n";
-        }
-    }
-    public function prepararDadosUpdate(array|string $colunas, array|string $valores)
+    private function prepararDadosUpdate(array|string $colunas, array|string $valores)
     {
         $texto = "";
 
@@ -91,23 +54,34 @@ class db
 
         return $texto;
     }
-    public function vender($values, $id)
+    public function cadastrar($table, $values)
     {
-        [$colunas, $valores] = $this->prepararDadosQuery($values, false);
+        [$colunas, $valores] = $this->prepararDadosQuery($values);
 
-        //quantia do banco de dados
-        $ok = pg_query($this->connection, "SELECT quantidade_est, id_est FROM estoque WHERE id_est = $id");
-        while ($row = pg_fetch_assoc($ok)) {
-            $quant = $row['quantidade_est'] . "\n"; //string
-        }
-        $quantidade = intval($quant) - intval($valores);
-
-        $registros = $this->prepararDadosUpdate($colunas, $quantidade);
-
-        $ok = pg_query($this->connection, "UPDATE estoque SET $registros WHERE id_est = $id");
+        $ok = pg_query($this->connection, "INSERT INTO $table ($colunas) VALUES ($valores)");
 
         if (!$ok) {
             print("Falha ao tentar inserir no banco de dados \n \n");
+
+            readline('Pressione qualquer tecla para continuar');
+        }
+    }
+    public function lerEstoque($table)
+    {
+        $ok = pg_query($this->connection, "SELECT * FROM $table");
+        system('clear');
+        echo "-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=\n";
+        echo "|  ID  |       Nome      | Quantidade |\n";
+        echo "-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-\n\n";
+
+        while ($row = pg_fetch_assoc($ok)) {
+            echo "| " . str_pad($row["id_est"], 4, " ", STR_PAD_LEFT) . " | ";
+            echo str_pad(substr($row["nome_est"], 0, 18), 15, " ", STR_PAD_RIGHT) . " | ";
+            echo str_pad($row["quantidade_est"], 10, " ", STR_PAD_RIGHT) . " |\n";
+            echo "_______________________________________\n\n";
+        }
+        if (!$ok) {
+            print("Falha ao tentar ler no banco de dados \n \n");
 
             readline('Pressione qualquer tecla para continuar');
         }
@@ -119,9 +93,9 @@ class db
         $queryEstoque = pg_query($this->connection, "SELECT quantidade_est, id_est FROM estoque WHERE id_est = $id");
         $queryEstoque = pg_fetch_all($queryEstoque);
 
+
         if (!$queryEstoque[0]['quantidade_est']) {
             print("Falha ao tentar inserir no banco de dados \n \n");
-
             readline('Pressione qualquer tecla para continuar');
         }
 
@@ -135,11 +109,44 @@ class db
         $okMov = pg_query($this->connection, "INSERT INTO $table ($colunas) VALUES ($valores)");
         $okUpdate = pg_query($this->connection, "UPDATE estoque SET quantidade_est = $novaQuantidade WHERE id_est = $id");
 
-        if (!$okUpdate || $okMov) {
+        if (!$okUpdate || !$okMov) {
             print("Falha ao tentar inserir no banco de dados \n \n");
 
             readline('Pressione qualquer tecla para continuar');
         }
     }
 
+    public function relatorio()
+    {
+        $selectAll = pg_query($this->connection, "SELECT * FROM estoque");
+        $selectAll = pg_fetch_all($selectAll);
+        $this->lerEstoque('estoque');
+        echo "\nDeseja exportar o relatório?\n[1] Não\n[2] Exportar relatório\nDigite sua opção:    ";
+        $exportar = readline();
+        if ($exportar == 2) {
+            $this->csv($selectAll);
+        } else {
+            readline('Pressione qualquer tecla para continuar');
+        }
+
+    }
+    public function csv($dados)
+    {
+        $nomeArquivo = 'dados.csv';
+
+        $arquivo = fopen($nomeArquivo, 'w');
+
+        if ($arquivo) {
+            foreach ($dados as $linha) {
+                fputcsv($arquivo, $linha, ";");
+            }
+
+            fclose($arquivo);
+
+            echo "\nOs dados foram exportados para $nomeArquivo.\n";
+        } else {
+            echo "Erro ao abrir o arquivo para escrita.";
+        }
+
+    }
 }

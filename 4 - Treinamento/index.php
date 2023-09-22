@@ -4,12 +4,10 @@ include_once('./db.php');
 
 $db = new db();
 
-// Testa a conexão com o banco de dados
-
 $db->connect();
 while (true) {
 
-    echo "[1] Cadastro \n[2] Movimentação\n[3] Gerar relatório\nInsira: ";
+    echo "\n\n[1] Cadastro \n[2] Movimentação\n[3] Gerar relatório\nInsira: ";
     $selecionarMenu = readline();
 
     system('clear');
@@ -25,7 +23,6 @@ while (true) {
             gerarRelatorio($db);
             break;
     }
-
 }
 function cadastrar($db)
 {
@@ -36,9 +33,7 @@ function cadastrar($db)
     echo "Insira a quantidade: ";
     $quantidade_est = readline();
 
-
     $db->cadastrar('estoque', ['nome_est' => $nome_est, 'quantidade_est' => $quantidade_est]);
-
 }
 function movimentacao($db)
 {
@@ -52,8 +47,7 @@ function movimentacao($db)
     } else {
         $tipotransacao_mov = "Entrada";
     }
-
-    $today = (date("F j, Y, g:i a"));
+    $today = (date("Y-m-d"));
     echo "Insira qual item deseja: ";
     $fkItemEstoque_est = readline();
 
@@ -63,8 +57,25 @@ function movimentacao($db)
 
     $db->movimentar('movimentacao', ['tipotransacao_mov' => $tipotransacao_mov, 'data_mov' => $today, 'quantidade_mov' => $quantidade_mov, 'fkItemEstoque_est' => $fkItemEstoque_est], $fkItemEstoque_est);
 }
-
 function gerarRelatorio($db)
 {
-    $db->relatorio();
+    echo "[1] Relatório geral \n[2] Relatório especifico\n[3] Relatório movimento \nInsira: ";
+    $selecionarMenu = readline();
+
+    system('clear');
+
+    switch ($selecionarMenu) {
+        case 1:
+            $db->relatorioTotal();
+            break;
+        case 2:
+            echo "Insira o id: ";
+            $id = readline();
+            $db->relatorioEspecifico($id);
+            break;
+        case 3:
+            echo "Insira o id: ";
+            $id = readline();
+            $db->lerMovimentacaoEspecifico($id);
+    }
 }

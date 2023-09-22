@@ -37,23 +37,6 @@ class db
         }
         return [$colunas, $valores];
     }
-    private function prepararDadosUpdate(array|string $colunas, array|string $valores)
-    {
-        $texto = "";
-
-        if (is_array($colunas) && is_array($valores)) {
-            $linhas = count($colunas) - 1;
-
-            foreach ($colunas as $key => $coluna) {
-                $texto .= "$coluna = '$valores[$key]'";
-                $texto .= $key != $linhas ? ", " : "";
-            }
-        } else {
-            $texto .= "$colunas = '$valores'";
-        }
-
-        return $texto;
-    }
     public function cadastrar($table, $values)
     {
         [$colunas, $valores] = $this->prepararDadosQuery($values);
@@ -88,10 +71,7 @@ class db
         if ($values['tipotransacao_mov'] == 'Entrada') {
             $novaQuantidade = $queryEstoque[0]['quantidade_est'] + $values['quantidade_mov'];
         } else if ($queryEstoque[0]['quantidade_est'] > 0 || $values['tipotransacao_mov'] == 'Saida') {
-            $novaQuantidade = $queryEstoque[0]['quantidade_est'] - $novaQuantidade = $values['quantidade_mov'];
-        } else {
-            $novaQuantidade = $queryEstoque[0]['quantidade_est'];
-            echo "Não há itens suficientes no estoque, temos: $novaQuantidade itens\n";
+            $novaQuantidade = $queryEstoque[0]['quantidade_est'] - $values['quantidade_mov'];
         }
 
         $okMov = pg_query($this->connection, "INSERT INTO $table ($colunas) VALUES ($valores)");
@@ -149,20 +129,11 @@ class db
         $ok = pg_query($this->connection, "SELECT * FROM estoque WHERE id_est = $id");
         $queryMovimentacao = pg_fetch_all($query);
         $ok = pg_fetch_all($ok);
-
         $this->relatorioMovimentacaoEspecifico($id);
-        echo "O item selecionado é: " . $ok[0]['nome_est'];
 
         if (!$query) {
             echo "Falha ao tentar ler no banco de dados\n\n";
 
-            readline('Pressione qualquer tecla para continuar');
-        }
-        echo "\nDeseja exportar o relatório?\n[1] Não\n[2] Exportar relatório\nDigite sua opção:    ";
-        $exportar = readline();
-        if ($exportar == 2) {
-            $this->csv($queryMovimentacao);
-        } else {
             readline('Pressione qualquer tecla para continuar');
         }
     }
@@ -225,12 +196,28 @@ class db
 
         $selectOne = pg_fetch_all($selectOne);
         $this->relatorioMovimentacaoEspecifico($id);
-        echo "\nDeseja exportar o relatório?\n[1] Não\n[2] Exportar relatório\nDigite sua opção:    ";
-        $exportar = readline();
-        if ($exportar == 2) {
-            $this->csv($selectOne);
-        } else {
-            readline('Pressione qualquer tecla para continuar');
+        // echo "\nDeseja exportar o relatório?\n[1] Não\n[2] Exportar relatório\nDigite sua opção:    ";
+        // $exportar = readline();
+        // if ($exportar == 2) {
+        //     $this->csv($selectOne);
+        // } else {
+        //     readline('Pressione qualquer tecla para continuar');
+        // }
+    }
+
+    public function movimentoGeral()
+    {
+        $selectOne = pg_query($this->connection, "SELECT * FROM movimentacao ");
+
+        echo "\033c";
+        echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n";
+        echo "|  ID  |  Tipo de Transação  |  Quantidade  |  Data              |\n";
+        echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n";
+        while ($row = pg_fetch_assoc($selectOne)) {
+            echo "| " . str_pad($row["id_mov"], 4, " ", STR_PAD_LEFT) . " | ";
+            echo str_pad(substr($row["tipotransacao_mov"], 0, 18), 10, " ", STR_PAD_RIGHT) . " | ";
+            echo str_pad($row["quantidade_mov"], 12, " ", STR_PAD_LEFT) . " | ";
+            echo str_pad($row["data_mov"], 20, " ", STR_PAD_RIGHT) . " |\n";
         }
     }
     public function csv($dados, $nomeArquivo = 'dados')
@@ -248,15 +235,17 @@ class db
         }
     }
 
-    function random_string($length)
-    {
-        $rand_string = '';
-        for ($i = 0; $i < $length; $i++) {
-            $number = random_int(0, 36);
-            $character = base_convert($number, 10, 36);
-            $rand_string .= $character;
-        }
 
-        return $rand_string;
+
+}
+function random_string($length)
+{
+    $rand_string = '';
+    for ($i = 0; $i < $length; $i++) {
+        $number = random_int(0, 36);
+        $character = base_convert($number, 10, 36);
+        $rand_string .= $character;
     }
+
+    return $rand_string;
 }

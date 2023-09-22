@@ -7,7 +7,7 @@ $db = new db();
 $db->connect();
 while (true) {
 
-    echo "\n\n[1] Cadastro \n[2] Movimentação\n[3] Gerar relatório\nInsira: ";
+    echo "\n[1] Cadastro \n[2] Movimentação\n[3] Gerar relatório\nInsira: ";
     $selecionarMenu = readline();
 
     system('clear');
@@ -59,7 +59,7 @@ function movimentacao($db)
 }
 function gerarRelatorio($db)
 {
-    echo "[1] Relatório geral \n[2] Relatório especifico\n[3] Relatório movimento\n[4] Relatório movimento com data\nInsira: ";
+    echo "[1] Relatório geral do estoque \n[2] Relatório especifico do estoque\n[3] Relatório geral do movimento\n[4] Relatório movimento com data\nInsira: ";
     $selecionarMenu = readline();
 
     system('clear');
@@ -69,20 +69,27 @@ function gerarRelatorio($db)
             $db->relatorioTotal();
             break;
         case 2:
+            $db->lerEstoque('estoque');
             echo "Insira o id: ";
             $id = readline();
             $db->relatorioEspecifico($id);
             break;
         case 3:
+            $db->movimentoGeral();
             echo "Insira o id: ";
             $id = readline();
             $db->lerMovimentacaoEspecifico($id);
+            break;
         case 4:
+            $db->movimentoGeral();
+            echo "Insira o id: ";
+            $id = readline();
             echo "Data inicial: ";
             $dataInicial = readline();
             echo "Data final: ";
             $dataFinal = readline();
 
-            $db->relatorioMovimentoData('1', $dataInicial, $dataFinal);
+            $db->relatorioMovimentoData($id, $dataInicial, $dataFinal);
+            break;
     }
 }

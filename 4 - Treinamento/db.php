@@ -247,15 +247,16 @@ class db
             echo "Erro ao abrir o arquivo para escrita.";
         }
     }
-}
-function random_string($length)
-{
-    $rand_string = '';
-    for ($i = 0; $i < $length; $i++) {
-        $number = random_int(0, 36);
-        $character = base_convert($number, 10, 36);
-        $rand_string .= $character;
-    }
 
-    return $rand_string;
+    function random_string($length)
+    {
+        $rand_string = '';
+        for ($i = 0; $i < $length; $i++) {
+            $number = random_int(0, 36);
+            $character = base_convert($number, 10, 36);
+            $rand_string .= $character;
+        }
+
+        return $rand_string;
+    }
 }

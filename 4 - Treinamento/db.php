@@ -150,16 +150,7 @@ class db
         $queryMovimentacao = pg_fetch_all($query);
         $ok = pg_fetch_all($ok);
 
-        echo "\033c";
-        echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n";
-        echo "|  ID  |  Tipo de Transação  |  Quantidade  |  Data              |\n";
-        echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n";
-        while ($row = pg_fetch_assoc($query)) {
-            echo "| " . str_pad($row["id_mov"], 4, " ", STR_PAD_LEFT) . " | ";
-            echo str_pad(substr($row["tipotransacao_mov"], 0, 18), 10, " ", STR_PAD_RIGHT) . " | ";
-            echo str_pad($row["quantidade_mov"], 12, " ", STR_PAD_LEFT) . " | ";
-            echo str_pad($row["data_mov"], 20, " ", STR_PAD_RIGHT) . " |\n";
-        }
+        $this->relatorioMovimentacaoEspecifico($id);
         echo "O item selecionado é: " . $ok[0]['nome_est'];
 
         if (!$query) {
@@ -174,7 +165,6 @@ class db
         } else {
             readline('Pressione qualquer tecla para continuar');
         }
-
     }
     public function relatorioTotal()
     {
@@ -206,9 +196,35 @@ class db
     }
     public function relatorioMovimentacaoEspecifico($id)
     {
-        $selectOne = pg_query($this->connection, "SELECT * FROM movimentacao WHERE  id_est = $id ");
+
+        $selectOne = pg_query($this->connection, "SELECT * FROM movimentacao WHERE  id_mov= $id ");
+        $select = pg_fetch_all($selectOne);
+
+        echo "\033c";
+        echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n";
+        echo "|  ID  |  Tipo de Transação  |  Quantidade  |  Data              |\n";
+        echo "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n";
+        while ($row = pg_fetch_assoc($selectOne)) {
+            echo "| " . str_pad($row["id_mov"], 4, " ", STR_PAD_LEFT) . " | ";
+            echo str_pad(substr($row["tipotransacao_mov"], 0, 18), 10, " ", STR_PAD_RIGHT) . " | ";
+            echo str_pad($row["quantidade_mov"], 12, " ", STR_PAD_LEFT) . " | ";
+            echo str_pad($row["data_mov"], 20, " ", STR_PAD_RIGHT) . " |\n";
+        }
+        echo "\nDeseja exportar o relatório?\n[1] Não\n[2] Exportar relatório\nDigite sua opção:    ";
+        $exportar = readline();
+        if ($exportar == 2) {
+            $this->csv($select);
+        } else {
+            readline('Pressione qualquer tecla para continuar');
+        }
+
+    }
+    public function relatorioMovimentoData($id, $dataInicial, $dataFinal)
+    {
+        $selectOne = pg_query($this->connection, "SELECT * FROM movimentacao WHERE fkItemEstoque_est = '$id' AND data_mov BETWEEN '$dataInicial' AND '$dataFinal'");
+
         $selectOne = pg_fetch_all($selectOne);
-        $this->lerEstoqueEspecifico('estoque', $id);
+        $this->relatorioMovimentacaoEspecifico($id);
         echo "\nDeseja exportar o relatório?\n[1] Não\n[2] Exportar relatório\nDigite sua opção:    ";
         $exportar = readline();
         if ($exportar == 2) {
@@ -216,13 +232,10 @@ class db
         } else {
             readline('Pressione qualquer tecla para continuar');
         }
-
     }
-    public function csv($dados)
+    public function csv($dados, $nomeArquivo = 'dados')
     {
-        $nomeArquivo = 'dados.csv';
-
-        $arquivo = fopen($nomeArquivo, 'w');
+        $arquivo = fopen($nomeArquivo . "(" . random_string(5) . ').csv', 'w');
 
         if ($arquivo) {
             foreach ($dados as $linha) {
@@ -234,4 +247,15 @@ class db
             echo "Erro ao abrir o arquivo para escrita.";
         }
     }
+}
+function random_string($length)
+{
+    $rand_string = '';
+    for ($i = 0; $i < $length; $i++) {
+        $number = random_int(0, 36);
+        $character = base_convert($number, 10, 36);
+        $rand_string .= $character;
+    }
+
+    return $rand_string;
 }

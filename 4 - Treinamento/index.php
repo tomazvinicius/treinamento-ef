@@ -59,7 +59,7 @@ function movimentacao($db)
 }
 function gerarRelatorio($db)
 {
-    echo "[1] Relatório geral \n[2] Relatório especifico\n[3] Relatório movimento \nInsira: ";
+    echo "[1] Relatório geral \n[2] Relatório especifico\n[3] Relatório movimento\n[4] Relatório movimento com data\nInsira: ";
     $selecionarMenu = readline();
 
     system('clear');
@@ -77,5 +77,12 @@ function gerarRelatorio($db)
             echo "Insira o id: ";
             $id = readline();
             $db->lerMovimentacaoEspecifico($id);
+        case 4:
+            echo "Data inicial: ";
+            $dataInicial = readline();
+            echo "Data final: ";
+            $dataFinal = readline();
+
+            $db->relatorioMovimentoData('1', $dataInicial, $dataFinal);
     }
 }

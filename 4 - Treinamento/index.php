@@ -33,16 +33,10 @@ function cadastrar($db)
     $nome_est = "";
     $quantidade_est = "";
 
-    while (true) {
-        echo "Insira o nome:   ";
-        $nome_est = readline();
+    echo "Insira o nome:   ";
+    $nome_est = readline();
 
-        if (ctype_alpha($nome_est)) {
-            break;
-        } else {
-            echo "Erro: O nome deve conter apenas letras. Tente novamente.\n";
-        }
-    }
+
     while (true) {
         echo "Insira a quantidade: ";
         $quantidade_est = readline();
@@ -78,7 +72,7 @@ function movimentacao($db)
         }
 
         if ($tipotransacao_mov === '9') {
-            return; // Volta ao menu principal
+            return;
         }
 
         $tipotransacao_mov = $tipotransacao_mov === '1' ? "Saída" : "Entrada";
@@ -102,6 +96,7 @@ function movimentacao($db)
 function gerarRelatorio($db)
 {
     while (true) {
+        system('clear');
         echo "[1] Relatório geral do estoque \n[2] Relatório especifico do estoque\n[3] Relatório geral do movimento\n[4] Relatório movimento com data\n[0] Voltar ao menu principal\nInsira: ";
         $selecionarMenu = readline();
 
@@ -129,22 +124,14 @@ function gerarRelatorio($db)
                 $db->relatorioMovimentacao();
                 break;
             case 4:
-                $validInput = false;
-                while (!$validInput) {
-                    echo "Data inicial: ";
-                    $dataInicial = readline();
-                    echo "Data final: ";
-                    $dataFinal = readline();
-                    if (is_numeric($dataInicial) && is_numeric($dataFinal)) {
-                        $validInput = true;
-                    } else {
-                        echo "Entrada inválida. Apenas números são permitidos.\n";
-                    }
-                }
+                echo "Data inicial: ";
+                $dataInicial = readline();
+                echo "Data final: ";
+                $dataFinal = readline();
                 $db->relatorioMovimentoData($dataInicial, $dataFinal);
                 break;
             case 0:
-                return; // Volta ao menu principal
+                return;
             default:
                 echo "Opção inválida. Insira uma opção válida.\n";
         }

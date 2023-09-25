@@ -63,14 +63,18 @@ class db
 
 
         if (!$queryEstoque[0]['quantidade_est']) {
-            print("Falha ao tentar inserir no banco de dados \n \n");
-            readline('Pressione qualquer tecla para continuar');
+            $novaQuantidade = $queryEstoque[0]['quantidade_est'];
         }
-
         if ($values['tipotransacao_mov'] == 'Entrada') {
             $novaQuantidade = $queryEstoque[0]['quantidade_est'] + $values['quantidade_mov'];
-        } else if ($queryEstoque[0]['quantidade_est'] >= 0 || $values['tipotransacao_mov'] == 'Saida') {
+        } else if ($queryEstoque[0]['quantidade_est'] > 0 || $values['tipotransacao_mov'] == 'Saida') {
             $novaQuantidade = $queryEstoque[0]['quantidade_est'] - $values['quantidade_mov'];
+            if ($novaQuantidade < 0) {
+                $novaQuantidade = $queryEstoque[0]['quantidade_est'];
+
+                echo "Quantidade inválida, não possuímos essa quantidade de itens no estoque!";
+                sleep(4);
+            }
         }
 
         $okMov = pg_query($this->connection, "INSERT INTO $table ($colunas) VALUES ($valores)");

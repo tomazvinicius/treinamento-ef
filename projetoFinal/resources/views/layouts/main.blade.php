@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,19 +16,32 @@
 
     <!-- CSS da aplicação -->
     <link rel="stylesheet" href="/css/app.css">
+
+    <link rel="icon" type="image/x-icon" href="/img/fav.png">
     
 </head>
 
+@yield('navbar')
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="collapse navbar-collapse" id="navbar">
+        <a href="/" class="navbar-brand"></a>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="/" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="/produtos/ler" class="nav-link">Produtos</a>
+          </li>
+          <li class="nav-item">
+            <a href="/produtos/cadastrar" class="nav-link">Cadastrar</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
 
 @yield('content')
-
-<div id="search-container" class="col-md-12">
-  <h1>Busque um produto</h1>
-  <form action="">
-      <input type="text" id="search" name="search" class="form-control" placeholder="Procure o produto">
-  </form>
-</div>
-<body>
 
   <footer>
     <p>Leninha Doceria Artesanal &copy; 2023</p> 

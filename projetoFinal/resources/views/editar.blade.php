@@ -5,7 +5,7 @@
 
 <div id="event-create-container" class="col-md-6 offset-md-3">
     <h1>Editando seu produto</h1>
-    <form action="/produtos/editar/{{$produtos->id}}" method="POST" enctype="multipart/form-data">
+    <form action="/produtos/update/{{$produtos->id}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PATCH')
       <div class="form-group m-3">

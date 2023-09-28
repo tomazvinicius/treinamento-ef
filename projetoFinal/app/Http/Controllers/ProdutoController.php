@@ -74,6 +74,5 @@ class ProdutoController extends Controller
     {
         return redirect()->route('produto.table');
 
-        dd($request->all());
     }
 }

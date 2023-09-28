@@ -3,29 +3,33 @@
 @section('navbar')
 @section('content')
 
-{{-- <div id="search-container" class="col-md-12">
-    <h1>Busque um produto</h1>
-    <form action="">
-        <input type="text" id="search" name="search" class="form-control" placeholder="Procurar...">
-    </form>
-</div> --}}
-
 <div id="products-container" class="col-md-12">
-    {{-- <h2>Produtos</h2> --}}
-
-    <div id="cards-container" class="row">
-        @foreach ($produtos as $produto)
-            <div class="card col-md-2">
-                <img src="/img/boloMorango.jpg" alt="">
-                <div class="card-body">
-                    <h5 class="card-nome">{{$produto->nome}}</h5>
-                    <p class="card-preco">{{$produto->preco}}</p>
-                    <p class="card-descricao">{{$produto->descricao}}</p>
-                    <a href="" class="btn btn-primary">Saiba mais</a>
+    <div class="container">
+        <div id="cards-container" class="row">
+            @foreach ($produtos as $produto)
+                <div class="card col-lg-3 col-md-4 col-sm-6 mb-4">
+                    <div class="card-body">
+                        <h5 class="card-nome-{{ $produto->id }}">{{$produto->nome}}</h5>
+                        <p class="d-none card-preco-{{ $produto->id }}">{{$produto->preco}}</p>
+                        <p class="d-none card-descricao-{{ $produto->id }}">{{$produto->descricao}}</p>
+                        <img src="/img/{{$produto->imagem}}" id="imagemProduto-{{ $produto->id }}" alt="" class="img-fluid">
+                        <button class="btn btn-primary saiba-mais" data-produto="{{ $produto->id }}">Saiba mais</button>
+                    </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+        </div>
     </div>
 </div>
 
+<script>
+    $('.saiba-mais').on('click', function() {
+        let id = $(this).data('produto');
+
+        let nome      = $('.card-nome-' + id).text();
+        let preco     = $('.card-preco-' + id).text();
+        let descricao = $('.card-descricao-' + id).text();
+        let imagem;
+        alert('Nome: ' + nome + '/Preço; ' + preco + '/Descricao: ' + descricao);
+    });
+</script>
 @endsection

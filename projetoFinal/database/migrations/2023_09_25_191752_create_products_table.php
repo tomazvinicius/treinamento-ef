@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('nome');
             $table->text("descricao");
             $table->float("preco");
+            $table->string("imagem");
         });
     }
 

@@ -1,59 +1,83 @@
-*{
-    font-family: 'Roboto';
+* {
+    font-family: 'Roboto', sans-serif;
 }
 
-body{
+body {
     min-height: 100vh;
     padding-bottom: 100px;
     position: relative;
 }
 
-header{
-    background-color:rgb(224, 72, 128);
+header {
+    background-color: rgb(224, 72, 128);
     border-bottom: 1px solid #CCC;
 }
-.row{
+.navbar-toggler{
+    color: white;
+    background-color: white;
+}
+.row {
     margin: 0;
+
 }
 
-.container-fluid{
+.container-fluid {
     padding: 0;
 }
-
-.btn-primary{
+/*Botões*/
+.btn-primary {
     background-color: rgb(235, 118, 160);
     border: 2px solid rgb(235, 118, 160);
+    margin-top: 10px;
 }
 
-.btn-primary:hover{
+.btn-primary:hover {
     background-color: rgb(255, 255, 255);
-    color:  rgb(235, 118, 160);
+    color: rgb(235, 118, 160);
     border-color: rgb(248, 142, 181);
 }
 
-#cards-container{
+.saiba-mais{
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px; 
+}
+
+.container {
+    position: relative;
+}
+
+#imagemProduto {
+    width: 100%;
+}
+
+#cards-container {
     padding-top: 40px;
 }
 
 #navbar {
-    padding: 5px;
+    padding: 2px;
+    width: 100%;
 }
 
 #navbar a {
-    font-size: 20px;
-    color:#000000;
-}
+    font-size: 18px;
+    color: #ffffff;
+    width: 100%;
 
+}
 
 #navbar a:hover {
     font-size: 20px;
-    
-    color:rgb(253, 235, 249);}
+    color: rgb(246, 170, 230);
+}
 
-   
-footer{
-    text-align:center ;
-    background-color:rgb(247, 170, 198);
+#table-hover:hover{
+    color: rgb(246, 170, 230);
+}
+footer {
+    text-align: center;
+    background-color: rgb(247, 170, 198);
     color: #FFF;
     padding: 10px;
     position: absolute;
@@ -61,6 +85,32 @@ footer{
     width: 100%;
 }
 
-footer p{
+footer p {
     margin-bottom: 0;
+}
+
+
+
+/* Tabelas */
+.table thead th {
+
+    background-color: rgb(247, 170, 198);
+    color: #fff; 
+}
+/* Botões de ações da tabela */
+.btn-action-edit{
+    background-color: rgb(242, 181, 204);
+    color: white;
+}
+.btn-action-delete{
+    background-color: rgb(186, 27, 138);
+    color: white;
+}
+
+/*  Editar */
+
+.img-preview{
+    width: 150px;
+    margin-top: 10px;
+    margin-left: 60px;
 }

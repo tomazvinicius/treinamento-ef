@@ -38,7 +38,7 @@
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mx-auto">
           <li class="nav-item">
-            <a href="/" class="nav-link">Home</a>
+            <a href="/" class="nav-link">Home</a> 
           </li>
           <li class="nav-item">
             <a href="{{ route('produto.read') }}" class="nav-link">Produtos</a>

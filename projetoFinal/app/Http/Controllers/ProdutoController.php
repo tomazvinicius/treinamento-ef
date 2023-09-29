@@ -72,6 +72,7 @@ class ProdutoController extends Controller
         return redirect()->route('produto.dashboard');
 
     }
+
     public function destroy(Produto $produto)
     {
         if ($produto->delete()) {

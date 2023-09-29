@@ -25,8 +25,10 @@
                 <input type="file" id="imagem" name="imagem" class="from-control-file">
                 <img src="{{asset($produtos->imagem)}}" alt="" class="img-preview">
               <div class="d-flex justify-content-center mt-3">
-            <input type="submit" class="btn btn-primary m-3" value="Editar produto">
+            <input type="submit" class="btn btn-primary m-3" value="Salvar">
         </form>
     </div>
 </div>
+
+
 @endsection

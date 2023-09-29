@@ -1,3 +1,9 @@
+:root {
+    --rosa-principal: #FF85A2;
+    --marrom: #755139;
+    -branco: #FFFFFF
+}
+
 * {
     font-family: 'Roboto', sans-serif;
 }
@@ -11,30 +17,29 @@ body {
 
 /* Navbar */
 header {
-    background-color: rgb(235, 118, 160);
-    border-bottom: 1px solid #CCC;
+    background-color: var(--rosa-principal);
 }
 
-.navbar-brand img {
-    width: 70px;
-    height: auto;
-}
-
-.navbar-toggler {
-    background-color: white;
+.dropdown-item:hover {
+    background-color: var(-branco);
 }
 
 #navbar a {
-    font-size: 18px;
-    color: #ffffff;
+    font-size: 20px;
+    color: #000000;
     width: 100%;
+}
+
+.dropdown-item {
+    color: rgb(241, 35, 111);
 }
 
 #navbar a:hover {
     color: rgb(241, 35, 111);
-    background-color: #ffffff21;
-    border-radius: 5px;
+    /* background-color: #ffffff21; */
 }
+
+
 
 /* Botões */
 .btn-primary {
@@ -111,7 +116,7 @@ header {
 
 /* Deletar */
 .btn-delete {
-    background-color: rgb(170, 5, 96);
+    background-color: var(--marrom);
     margin-left: 5px;
     color: white;
 }

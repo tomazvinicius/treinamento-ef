@@ -3,8 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdutoController;
 
-// Home
-Route::get('/', [ProdutoController::class, 'index'])->name('produto.home');
 
 Route::get('/produtos/cadastrar', [ProdutoController::class, 'create'])->name('produto.create');
 Route::post('/produtos', [ProdutoController::class, 'store'])->name('produto.store');
@@ -19,4 +17,4 @@ Route::patch('/produtos/update/{produto}', [ProdutoController::class, 'update'])
 
 Route::delete('/produtos/delete/{produto}', [ProdutoController::class, 'destroy'])->name('produto.destroy');
 
-Route::get('/gerar-pdf', [ProdutoController::class, 'gerarPDF']);
+Route::get('/gerar-pdf', [ProdutoController::class, 'gerarPDF'])->name('produto.pdf');

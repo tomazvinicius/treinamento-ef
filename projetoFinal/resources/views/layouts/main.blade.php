@@ -28,32 +28,51 @@
 </head>
 <body>
   {{-- Navbar --}}
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="container">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+  <!DOCTYPE html>
+  <html lang="pt-BR">
+  <head>
+      <!-- ... Cabeçalho do HTML ... -->
+  </head>
+  <body>
+    <!-- Navbar -->
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbar">
+            <ul class="navbar-nav mx-auto">
+              <li>
+                <a class="nav-link" href="{{ route('produto.read') }}">Lista de Produtos</a>
+              </li>
+            
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="{{ route('produto.dashboard') }}">Dashboard</a>
+              </li>
 
-        <div class="collapse navbar-collapse" id="navbar">
-          <ul class="navbar-nav mx-auto">
-            <li class="nav-item">
-              <a href="/" class="nav-link">Home</a> 
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('produto.read') }}" class="nav-link">Produtos</a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('produto.create') }}" class="nav-link">Cadastrar</a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('produto.dashboard') }}" class="nav-link">Dashboard</a>
-            </li>
-          </ul>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="produtosDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Produtos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="produtosDropdown">
+              
+                  <a class="dropdown-item" href="{{ route('produto.create') }}">Cadastrar Produto</a>
+             
+                  <a class="dropdown-item" href="{{ route('produto.pdf') }}">Gerar PDF</a>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </nav>
-  </header>
+      </nav>
+    </header>
+  
+    <!-- ... Corpo do HTML ... -->
+  
+  </body>
+  </html>
+  
 
   <div class="container mt-4">
     @yield('content')

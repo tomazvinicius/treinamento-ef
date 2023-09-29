@@ -76,20 +76,6 @@
 
 <script>
   // Função para filtrar a tabela com base no campo de pesquisa
-  // $('#searchButton').on('click', function() {
-  //   var searchText = $('#search').val().toLowerCase();
-
-  //   $('table tbody tr').each(function() {
-  //     var cellText = $(this).find('td:first').text().toLowerCase();
-
-  //     if (cellText.indexOf(searchText) === -1) {
-  //       $(this).hide();
-  //     } else {
-  //       $(this).show();
-  //     }
-  //   });
-  // });
-
   $('#search').on('keyup', function() {
     var searchText = $(this).val().toLowerCase();
 
@@ -108,5 +94,4 @@
     }
   });
 </script>
-
 @endsection

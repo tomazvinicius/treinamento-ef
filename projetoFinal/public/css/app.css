@@ -78,14 +78,15 @@ header {
     position: relative;
 }
 
+
 /* Tabelas */
 .table {
     margin-top: 20px;
 }
 
+
 .table thead th {
     background-color: rgba(255, 105, 160, 0.397);
-    border: #f874d167 solid 1px;
     color: #000000;
 
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Models\Produto;
 
 class ProdutoController extends Controller
@@ -81,5 +82,12 @@ class ProdutoController extends Controller
             return redirect()->route('produto.dashboard')->with('error', 'Erro ao excluir o produto');
         }
     }
+    public function gerarPDF()
+    {
+        $produtos = Produto::all(); // Substitua 'Produto' pelo nome do seu modelo
 
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf', compact('produtos'));
+
+        return $pdf->download('produtos.pdf');
+    }
 }

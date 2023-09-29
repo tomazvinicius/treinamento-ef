@@ -18,3 +18,5 @@ Route::get('/produtos/editar/{produto}', [ProdutoController::class, 'edit'])->na
 Route::patch('/produtos/update/{produto}', [ProdutoController::class, 'update'])->name('produto.update');
 
 Route::delete('/produtos/delete/{produto}', [ProdutoController::class, 'destroy'])->name('produto.destroy');
+
+Route::get('/gerar-pdf', [ProdutoController::class, 'gerarPDF']);

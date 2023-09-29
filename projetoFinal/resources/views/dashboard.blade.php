@@ -4,6 +4,14 @@
 
 @section('content')
 <div class="container">
+  <div class="row mt-4 mb-2">
+    <div class="d-flex align-items-center p-0"> <!-- Adicione a classe d-flex e align-items-center aqui -->
+      <!-- Campo de pesquisa com ícone de pesquisa do Google -->
+      <div class="input-group float-end">
+        <input type="text" id="search" class="form-control" placeholder="Pesquisar por nome do produto">
+      </div>
+    </div>
+  </div>
   <div class="table-responsive">
     <table class="table">
       <thead class="table-head">
@@ -18,7 +26,7 @@
         @foreach ($produtos as $produto)
         <tr>
           <td>{{$produto->nome}}</td>
-          <td>{{$produto->preco}}</td>
+          <td>R$ {{$produto->preco}}</td>
           <td>{{$produto->descricao}}</td>
           <td>
             <div class="btn-group  action-buttons" role="group">
@@ -65,10 +73,40 @@
     </table>
   </div>
 </div>
+
 <script>
-  $('.btn-danger').on('click', function() {
-    let id = $(this).data('produto');
-    $('#deleteModal form').attr('action', '/produtos/delete/' + id);
+  // Função para filtrar a tabela com base no campo de pesquisa
+  // $('#searchButton').on('click', function() {
+  //   var searchText = $('#search').val().toLowerCase();
+
+  //   $('table tbody tr').each(function() {
+  //     var cellText = $(this).find('td:first').text().toLowerCase();
+
+  //     if (cellText.indexOf(searchText) === -1) {
+  //       $(this).hide();
+  //     } else {
+  //       $(this).show();
+  //     }
+  //   });
+  // });
+
+  $('#search').on('keyup', function() {
+    var searchText = $(this).val().toLowerCase();
+
+    if (searchText.length > 3) {
+      $('table tbody tr').each(function() {
+        var textoTabela = $(this).find('td:first').text().toLowerCase().trim();
+
+        if (textoTabela.indexOf(searchText) === -1) {
+          $(this).hide();
+        } else {
+          $(this).show();
+        }
+      });
+    }else{
+      $('table tbody tr').show();
+    }
   });
 </script>
+
 @endsection

@@ -9,8 +9,8 @@
             @foreach ($produtos as $produto)
                 <div class="card col-lg-3 col-md-4 col-sm-6 mb-4 card-custom">
                     <div class="card-body">
-                        <h5 class="card-nome-{{ $produto->id }}">{{$produto->nome}}</h5>
-                        <p class="d-none card-preco-{{ $produto->id }}">{{$produto->preco}}</p>
+                        <h5 class="nome-produto card-nome-{{ $produto->id }}">{{$produto->nome}}</h5>
+                        <p class="d-none card-preco-{{ $produto->id }}">R$ {{$produto->preco}}</p>
                         <p class="d-none card-descricao-{{ $produto->id }}">{{$produto->descricao}}</p>
                         <img src="{{ asset($produto->imagem) }}" id="imagemProduto-{{ $produto->id }}" alt="" class="img-fluid">
                         <button type="button" class="btn btn-primary saiba-mais" data-bs-toggle="modal" data-bs-target="#produtoModal" data-produto="{{ $produto->id }}">

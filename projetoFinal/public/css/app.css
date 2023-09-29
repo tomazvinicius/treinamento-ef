@@ -9,12 +9,33 @@ body {
 }
 
 header {
-    background-color: rgb(224, 72, 128);
+    background-color: rgb(235, 118, 160);
     border-bottom: 1px solid #CCC;
 }
+
+.navbar-brand img{
+    width: 70px; 
+    height: auto; 
+}
+
 .navbar-toggler{
     color: white;
     background-color: white;
+}
+
+
+
+#navbar a {
+    font-size: 18px;
+    color: #ffffff;
+    width: 100%;
+
+}
+
+#navbar a:hover {
+    color: rgb(241, 35, 111);
+    background-color: #ffffff21;
+    border-radius: 5px;
 }
 .row {
     margin: 0;
@@ -29,6 +50,7 @@ header {
     background-color: rgb(235, 118, 160);
     border: 2px solid rgb(235, 118, 160);
     margin-top: 10px;
+    width: 200px;
 }
 
 .btn-primary:hover {
@@ -47,6 +69,12 @@ header {
     position: relative;
 }
 
+/* Titulo de cada página */
+.titulo{
+    font-size: 2rem; 
+    color: rgb(235, 118, 160);
+}
+
 #imagemProduto {
     width: 100%;
 }
@@ -55,29 +83,13 @@ header {
     padding-top: 40px;
 }
 
-#navbar {
-    padding: 2px;
-    width: 100%;
-}
-
-#navbar a {
-    font-size: 18px;
-    color: #ffffff;
-    width: 100%;
-
-}
-
-#navbar a:hover {
-    font-size: 20px;
-    color: rgb(246, 170, 230);
-}
 
 #table-hover:hover{
     color: rgb(246, 170, 230);
 }
 footer {
     text-align: center;
-    background-color: rgb(247, 170, 198);
+    background-color: rgb(243, 52, 122);
     color: #FFF;
     padding: 10px;
     position: absolute;
@@ -92,10 +104,14 @@ footer p {
 
 
 /* Tabelas */
-.table thead th {
+.table{
+    margin-top:10px ;
 
-    background-color: rgb(247, 170, 198);
-    color: #fff; 
+}
+.table thead th {
+    background-color: rgba(219, 38, 104, 0.164);
+    color: #000000; 
+
 }
 /* Botões de ações da tabela */
 .btn-action-edit{
@@ -110,7 +126,9 @@ footer p {
 /*  Editar */
 
 .img-preview{
-    width: 150px;
+    width: 200px;
+    border: 3px rgba(189, 18, 138, 0.137) solid;
+    border-radius: 6px;
     margin-top: 10px;
     margin-left: 60px;
 }

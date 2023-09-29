@@ -3,14 +3,18 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdutoController;
 
+// Home
+Route::get('/', [ProdutoController::class, 'index'])->name('produto.home');
 
-Route::get('/', [ProdutoController::class, 'index']);
-Route::get('/produtos/ler', [ProdutoController::class, 'read']);
-Route::get('/produtos/tabela', [ProdutoController::class, 'table'])->name('produto.table');
+Route::get('/produtos/cadastrar', [ProdutoController::class, 'create'])->name('produto.create');
+Route::post('/produtos', [ProdutoController::class, 'store'])->name('produto.store');
 
-Route::get('/produtos/cadastrar', [ProdutoController::class, 'create']);
+Route::get('/produtos', [ProdutoController::class, 'read'])->name('produto.read');
 
-Route::get('/produtos/editar/{produto}', [ProdutoController::class, 'edit']);
+Route::get('/produtos/dashboard', [ProdutoController::class, 'dashboard'])->name('produto.dashboard');
+
+Route::get('/produtos/editar/{produto}', [ProdutoController::class, 'edit'])->name('produto.edit');
+
 Route::patch('/produtos/update/{produto}', [ProdutoController::class, 'update'])->name('produto.update');
 
-Route::post('/produtos', [ProdutoController::class, 'store']);
+Route::delete('/produtos/delete/{produto}', [ProdutoController::class, 'destroy'])->name('produto.destroy');

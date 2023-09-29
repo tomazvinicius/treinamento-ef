@@ -15,12 +15,12 @@ class ProdutoController extends Controller
     public function create()
     {
         $produtos = Produto::all();
-        return view('cadastro', ['produtos' => $produtos]);
+        return view('produtos-cadastrar', ['produtos' => $produtos]);
     }
 
+    // Armazenar dados.
     public function store(Request $request)
     {
-
         $produto = new Produto;
 
         $produto->nome = $request->nome;
@@ -28,51 +28,57 @@ class ProdutoController extends Controller
         $produto->descricao = $request->descricao;
 
         if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
-            $requestImage = $request->imagem;
-            $extension = $requestImage->getClientOriginalExtension(); // Corrigido
-
-            $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension; // Corrigido
-
-            $requestImage->move(public_path('/img'), $imageName);
-
-            $produto->imagem = $imageName;
+            $produto->imagem = $request->file('imagem')->store('imagens/produtos');
         }
-
 
         $produto->save();
 
-        return redirect('/produtos/ler');
+        return redirect(route('produto.read'));
     }
 
+    // Cards dos produtos
     public function read()
     {
         $produtos = Produto::all();
-        return view('produtos', ['produtos' => $produtos]);
+        return view('produtos-exibir', ['produtos' => $produtos]);
 
     }
 
-    public function table()
+    // Dashboard dos produtos
+    public function dashboard()
     {
         $produtos = Produto::all();
-        return view('tabela-a', ['produtos' => $produtos]);
+        return view('dashboard', ['produtos' => $produtos]);
     }
-
-    // public function destroy($id)
-    // {
-    //     Produto::findFail($id)->delete();
-
-    //     return redirect('/produtos/ler')->with('msg', "Produto excluído com sucesso");
-    // }
-
+    // Editar produtos
     public function edit(Produto $produto)
     {
 
-        return view('editar', ['produtos' => $produto]);
+        return view('produtos-editar', ['produtos' => $produto]);
     }
 
+    //  Alterar produtos
     public function update(Request $request, Produto $produto)
     {
-        return redirect()->route('produto.table');
+        $produto->nome = $request->nome;
+        $produto->preco = $request->preco;
+        $produto->descricao = $request->descricao;
+
+        if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+            $produto->imagem = $request->file('imagem')->store('imagens/produtos');
+        }
+
+        $produto->save();
+        return redirect()->route('produto.dashboard');
 
     }
+    public function destroy(Produto $produto)
+    {
+        if ($produto->delete()) {
+            return redirect()->route('produto.dashboard')->with('msg', 'Produto excluído com sucesso');
+        } else {
+            return redirect()->route('produto.dashboard')->with('error', 'Erro ao excluir o produto');
+        }
+    }
+
 }

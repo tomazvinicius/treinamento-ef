@@ -12,7 +12,7 @@
                         <h5 class="card-nome-{{ $produto->id }}">{{$produto->nome}}</h5>
                         <p class="d-none card-preco-{{ $produto->id }}">{{$produto->preco}}</p>
                         <p class="d-none card-descricao-{{ $produto->id }}">{{$produto->descricao}}</p>
-                        <img src="/img/{{$produto->imagem}}" id="imagemProduto-{{ $produto->id }}" alt="" class="img-fluid">
+                        <img src="{{ asset($produto->imagem) }}" id="imagemProduto-{{ $produto->id }}" alt="" class="img-fluid">
                         <button class="btn btn-primary saiba-mais" data-produto="{{ $produto->id }}">Saiba mais</button>
                     </div>
                 </div>

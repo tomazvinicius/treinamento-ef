@@ -5,14 +5,16 @@
 @section('content')
 <div class="container">
   <div class="row mt-4 mb-2">
-    <div class="d-flex align-items-center p-0"> <!-- Adicione a classe d-flex e align-items-center aqui -->
-      <!-- Campo de pesquisa com ícone de pesquisa do Google -->
-      <div class="input-group float-end">
-        <input type="text" id="search" class="form-control" placeholder="Pesquisar por nome do produto">
+    <div class="text-end mb-2">
+      <a class="btn botao-relatorio" href="{{ route('produto.pdf') }}"><i class="fa-sharp fa-regular fa-floppy-disk pr-2" ></i>  Emitir relatório</a>
+    </div>
+    <div class="d-flex align-items-center p-0">
+      <form class="form-inline my-2 my-lg-0 row">
+        <input type="text" id="search" class="form-control" placeholder="Pesquisar ">
       </div>
     </div>
   </div>
-  <div class="table-responsive">
+  <div class="table-responsive row">
     <table class="table">
       <thead class="table-head">
         <tr>
@@ -31,7 +33,7 @@
           <td>
             <div class="btn-group  action-buttons" role="group">
               {{-- Botão de editar --}}
-              <a href="/produtos/editar/{{$produto->id}}" class="btn btn-action-edit "><i class="material-icons">edit</i></a>
+              <a href="/produtos/editar/{{$produto->id}}" class="btn btn-action-edit "><i class="fa-solid fa-pencil fa-lg "></i></a>
               <a href="#"></a>
               <form action="/produtos/delete/{{$produto->id}}" method="POST">
                 @csrf
@@ -39,7 +41,7 @@
 
                 <!-- Botão de exclusão -->
                 <button type="button" class="btn btn-action-delete" data-bs-toggle="modal" data-bs-target="#deleteModal{{$produto->id}}">
-                  <i class="material-icons">delete</i>
+                  <i class="fa-solid fa-trash"></i>
                 </button>
 
                 <!-- Modal de confirmação de exclusão -->
@@ -59,11 +61,12 @@
                           @method('DELETE')
                           <button type="submit" class="btn btn-delete">Confirmar Exclusão</button>
                         </form>
-                        <button type="button" class="btn btn-nao-deletar" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
                       </div>
                     </div>
                   </div>
                 </div>
+                
               </form>
             </div>
           </td>
@@ -72,7 +75,10 @@
       </tbody>
     </table>
   </div>
+
 </div>
+</div>
+
 
 <script>
   // Função para filtrar a tabela com base no campo de pesquisa

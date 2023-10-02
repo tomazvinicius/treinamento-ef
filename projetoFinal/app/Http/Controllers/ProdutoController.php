@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Produto;
+use Illuminate\Support\Facades\Storage;
 
 class ProdutoController extends Controller
 {
@@ -22,17 +23,35 @@ class ProdutoController extends Controller
     // Armazenar dados.
     public function store(Request $request)
     {
-        $produto = new Produto;
+        $rules = [
+            'imagem' => 'image|required',
+            'nome' => 'required',
+            'preco' => 'required|numeric',
+            'descricao' => 'required|string',
+        ];
 
-        $produto->nome = $request->nome;
-        $produto->preco = $request->preco;
-        $produto->descricao = $request->descricao;
+        $messages = [
+            'imagem.required' => 'A imagem é obrigatória.',
+            'nome.required' => 'O nome é obrigatório.',
+            'preco.required' => 'O preço é obrigatório.',
+            'descricao.required' => 'A descrição é obrigatória.',
+            'imagem.image' => 'O arquivo de imagem não é válido.',
+        ];
 
-        if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
-            $produto->imagem = $request->file('imagem')->store('imagens/produtos');
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect(route('produto.create'))
+                ->withErrors($validator)
+                ->withInput();
         }
 
-        $produto->save();
+        $produto = Produto::create([
+            'imagem' => $request->file('imagem')->store('imagens/produtos'),
+            'nome' => $request->nome,
+            'preco' => $request->preco,
+            'descricao' => $request->descricao,
+        ]);
 
         return redirect(route('produto.read'));
     }
@@ -42,7 +61,6 @@ class ProdutoController extends Controller
     {
         $produtos = Produto::all();
         return view('produtos-exibir', ['produtos' => $produtos]);
-
     }
 
     // Dashboard dos produtos
@@ -51,14 +69,14 @@ class ProdutoController extends Controller
         $produtos = Produto::all();
         return view('dashboard', ['produtos' => $produtos]);
     }
+
     // Editar produtos
     public function edit(Produto $produto)
     {
-
         return view('produtos-editar', ['produtos' => $produto]);
     }
 
-    //  Alterar produtos
+    // Alterar produtos
     public function update(Request $request, Produto $produto)
     {
         $produto->nome = $request->nome;
@@ -71,20 +89,21 @@ class ProdutoController extends Controller
 
         $produto->save();
         return redirect()->route('produto.dashboard');
-
     }
 
     public function destroy(Produto $produto)
     {
         if ($produto->delete()) {
+            Storage::delete($produto->imagem);
             return redirect()->route('produto.dashboard')->with('msg', 'Produto excluído com sucesso');
         } else {
             return redirect()->route('produto.dashboard')->with('error', 'Erro ao excluir o produto');
         }
     }
+
     public function gerarPDF()
     {
-        $produtos = Produto::all(); // Substitua 'Produto' pelo nome do seu modelo
+        $produtos = Produto::all();
 
         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf', compact('produtos'));
 

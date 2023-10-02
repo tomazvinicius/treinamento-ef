@@ -26,7 +26,7 @@
                 <img src="{{asset($produtos->imagem)}}" alt="" class="img-preview mx-auto"> <!-- Centralize a imagem -->
             </div>
             <div class="d-flex justify-content-center mt-3">
-                <input type="submit" class="btn btn-primary" value="Salvar">
+                <input type="submit" class="btn botao" value="Salvar">
             </div>
         </form>
     </div>

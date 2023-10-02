@@ -8,12 +8,12 @@
         <div id="cards-container" class="row">
             @foreach ($produtos as $produto)
                 <div class="card col-lg-3 col-md-4 col-sm-6 mb-4 card-custom ">
-                    <div class="card-body text-center d-flex flex-column align-items-center"> <!-- Adicione as classes flex-column e align-items-center aqui -->
+                    <div class="card-body text-center d-flex flex-column align-items-center"> 
                         <h5 class="nome-produto card-nome-{{ $produto->id }}">{{$produto->nome}}</h5>
                         <p class="d-none card-preco-{{ $produto->id }}">R$ {{$produto->preco}}</p>
                         <p class="d-none card-descricao-{{ $produto->id }}">{{$produto->descricao}}</p>
                         <img src="{{ asset($produto->imagem) }}" id="imagemProduto-{{ $produto->id }}" alt="" class="img-fluid">
-                        <button type="button" class="btn btn-primary saiba-mais mt-auto" data-bs-toggle="modal" data-bs-target="#produtoModal" data-produto="{{ $produto->id }}">
+                        <button type="button" class="btn botao saiba-mais mt-auto" data-bs-toggle="modal" data-bs-target="#produtoModal" data-produto="{{ $produto->id }}">
                             Saiba mais
                         </button>
                     </div>
@@ -38,7 +38,7 @@
                 <img src="" alt="" id="modal-imagem" class="img-fluid">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn botao" data-bs-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>

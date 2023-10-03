@@ -39,10 +39,6 @@
           </button>
           <div class="collapse navbar-collapse" id="navbar">
             <ul class="navbar-nav mx-auto">
-              <li>
-                <a class="nav-link" href="{{ route('produto.read') }}">Produtos</a>
-              </li>
-            
               <li class="nav-item dropdown">
                 <a class="nav-link" href="{{ route('produto.dashboard') }}">Tabela</a>
               </li>
@@ -52,7 +48,6 @@
                   Outros
                 </a>
                 <div class="dropdown-menu custom-link" aria-labelledby="produtosDropdown">
-              
                   <a class="dropdown-item " href="{{ route('produto.create') }}">Cadastrar Produto</a>
             </div>
               </li>

@@ -34,8 +34,6 @@
               {{-- Botão de editar --}}
               <a href="/produtos/editar/{{$produto->id}}" class="btn btn-action-edit "><i class="fa-solid fa-pencil fa-lg "></i></a>
               <a href="#"></a>
-
-
                 <!-- Botão de exclusão -->
                 <button type="button" class="btn btn-action-delete" data-bs-toggle="modal" data-bs-target="#deleteModal{{$produto->id}}">
                   <i class="fa-solid fa-trash"></i>

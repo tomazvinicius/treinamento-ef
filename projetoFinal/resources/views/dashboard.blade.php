@@ -9,7 +9,6 @@
       <a class="btn botao-relatorio" href="{{ route('produto.pdf') }}"><i class="fa-sharp fa-regular fa-floppy-disk pr-2" ></i>  Emitir relatório</a>
     </div>
     <div class="d-flex align-items-center p-0">
-      <form class="form-inline my-2 my-lg-0 row">
         <input type="text" id="search" class="form-control" placeholder="Pesquisar ">
       </div>
     </div>
@@ -35,9 +34,7 @@
               {{-- Botão de editar --}}
               <a href="/produtos/editar/{{$produto->id}}" class="btn btn-action-edit "><i class="fa-solid fa-pencil fa-lg "></i></a>
               <a href="#"></a>
-              <form action="/produtos/delete/{{$produto->id}}" method="POST">
-                @csrf
-                @method('DELETE')
+
 
                 <!-- Botão de exclusão -->
                 <button type="button" class="btn btn-action-delete" data-bs-toggle="modal" data-bs-target="#deleteModal{{$produto->id}}">
@@ -67,7 +64,6 @@
                   </div>
                 </div>
                 
-              </form>
             </div>
           </td>
         </tr>

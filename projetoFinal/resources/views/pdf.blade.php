@@ -2,71 +2,23 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Leninha Doceria Artesanal - Produtos</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f6f6f6;
-            padding: 20px;
-        }
-
-        .header {
-            text-align: center;
-            background-color: #ff6b81;
-            padding: 20px 0;
-        }
-
-        .header h1 {
-            color: #fff;
-            margin: 0;
-        }
-
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: #fff;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #ff6b81;
-            color: #fff;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <title>Cardápio do Restaurante Leninha</title>
+       {{--  CSS do PDF  --}}
+       <link rel="stylesheet" href="css/pdf.css">
+       <link rel="icon" type="image/x-icon" href="logo.svg">
 </head>
 <body>
     <div class="header">
-        <h1>Leninha Doceria Artesanal</h1>
+        <h1>Cardápio - Leninha Doceria Artesanal</h1>
     </div>
 
-
-    <table>
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Preço</th>
-                <th>Descrição</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($produtos as $produto)
-                <tr>
-                    <td>{{ $produto->nome }}</td>
-                    <td>R$ {{ $produto->preco }}</td>
-                    <td>{{ $produto->descricao }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+    @foreach ($produtos as $produto)
+        <div class="menu-item">
+            <img src="{{ $produto->imagem }}" alt="{{ $produto->nome }}" class="produto-imagem">
+            <h2>{{ $produto->nome }}</h2>
+            <p>{{ $produto->descricao }}</p>
+            <p><strong>Preço:</strong> <span>R$ {{ $produto->preco }}</span></p>
+        </div>
+    @endforeach
 </body>
 </html>

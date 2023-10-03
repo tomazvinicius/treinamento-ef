@@ -26,8 +26,8 @@ class ProdutoController extends Controller
         $rules = [
             'imagem' => 'image|required',
             'nome' => 'required',
-            'preco' => 'required|numeric',
-            'kg' => 'required|numeric',
+            'preco' => 'required',
+            'kg' => 'required',
             'descricao' => 'required|string',
         ];
 
@@ -51,9 +51,9 @@ class ProdutoController extends Controller
         $produto = Produto::create([
             'imagem' => $request->file('imagem')->store('imagens/produtos'),
             'nome' => $request->nome,
-            'preco' => $request->preco,
+            'preco' => str_replace(',', '.', str_replace('.', '', $request->preco)),
             'descricao' => $request->descricao,
-            'kg' => $request->kg,
+            'kg' => str_replace(',', '.', $request->kg),
         ]);
         $produtos = Produto::all();
         return view('dashboard', ['produtos' => $produtos]);
@@ -83,7 +83,9 @@ class ProdutoController extends Controller
     public function update(Request $request, Produto $produto)
     {
         $produto->nome = $request->nome;
-        $produto->preco = $request->preco;
+
+        $produto->preco = str_replace(',', '.', str_replace('.', '', $request->preco));
+        $produto->kg = str_replace(',', '.', $request->kg);
         $produto->descricao = $request->descricao;
 
         if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {

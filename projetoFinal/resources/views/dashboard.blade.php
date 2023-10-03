@@ -7,11 +7,11 @@
   <div class="row mt-4 mb-2">
     <div class="col-md-6 text-start mb-2">
       <a class="btn botao-relatorio mb-2" href="{{ route('produto.pdf') }}"><i class="fa-sharp fa-regular fa-floppy-disk pr-2"></i>  Emitir relatório</a>
-      <a class="btn botao-cadastrar mb-2" href="{{ route('produto.create') }}"><i class="fa-sharp fa-regular fa-plus pr-2"></i>  Cadastrar produto</a>
+      <a class="btn botao-cadastrar mb-2 " href="{{ route('produto.create') }}"><i class="fa-sharp fa-regular fa-plus pr-2"></i>  Cadastrar produto</a>
     </div>
     <div class="col-md-6">
       <div class="d-flex align-items-center p-0 row">
-        <input type="text" id="search" class="form-control" placeholder="Pesquisar ">
+        <input type="text" id="search" class="form-control row" placeholder="Pesquisar ">
       </div>
     </div>
   </div>
@@ -42,7 +42,6 @@
               <button type="button" class="btn btn-action-delete" data-bs-toggle="modal" data-bs-target="#deleteModal{{$produto->id}}">
                 <i class="fa-solid fa-trash"></i>
               </button>
-
               <!-- Modal de confirmação de exclusão -->
               <div class="modal fade" id="deleteModal{{$produto->id}}" tabindex="-1" aria-labelledby="deleteModalLabel{{$produto->id}}" aria-hidden="true">
                 <div class="modal-dialog">

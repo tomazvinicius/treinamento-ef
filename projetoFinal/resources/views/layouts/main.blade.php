@@ -23,20 +23,12 @@
    <header>
     <nav class="navbar navbar-expand-lg">
       <div class="container">
-        <!-- Link de início centralizado -->
         <div class="mx-auto">
-          <a class="navbar-brand" href="{{ route('produto.dashboard') }}"><i class="fa-solid fa-house" style="color: #ffffff;"></i>  Início </a>
-        </div>
-        <!-- Links adicionais visíveis apenas em telas maiores -->
-        <div class="collapse navbar-collapse d-lg-block" id="navbar">
-          <ul class="navbar-nav mx-auto">
-            <!-- Adicione aqui os links adicionais se necessário -->
-          </ul>
+          <a class="navbar-brand" href="{{ route('produto.dashboard') }}"><i class="fa-solid fa-house" style="color: #ffffff;"></i>   </a>
         </div>
       </div>
     </nav>
   </header>
-  
   <div class="container mt-4">
     @yield('content')
   </div>
@@ -46,7 +38,11 @@
     <p>Leninha Doceria Artesanal &copy; 2023</p>
   </footer>
 
+  {{-- Fonte Awesome --}}
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+  {{-- Fonte Awesome --}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js" integrity="sha512-0XDfGxFliYJPFrideYOoxdgNIvrwGTLnmK20xZbCAvPfLGQMzHUsaqZK8ZoH+luXGRxTrS46+Aq400nCnAT0/w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   {{-- Fonte Awesome --}}
   <script src="https://kit.fontawesome.com/8b1a4d86ba.js" crossorigin="anonymous"></script>

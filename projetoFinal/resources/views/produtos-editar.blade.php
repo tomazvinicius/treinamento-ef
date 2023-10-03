@@ -14,11 +14,11 @@
             </div>
             <div class="form-group">
                 <label for="preco">Preço:</label>
-                <input type="text" class="form-control" id="preco" name="preco" placeholder="Preço do produto" value="{{$produtos->preco}}">
+                <input type="text" onkeyup="$(this).mask('000.000.000.000.000,00', {reverse: true})" class="form-control" id="preco" name="preco" placeholder="Preço do produto" value="{{$produtos->preco}}">
             </div>
             <div class="form-group">
                 <label for="preco">Kg:</label>
-                <input type="text" class="form-control" id="kg" name="kg" placeholder="Kg do produto" value="{{$produtos->kg}}">
+                <input type="text" onkeyup="$(this).mask('00,00')"  class="form-control" id="kg" name="kg" placeholder="Kg do produto" value="{{$produtos->kg}}">
             </div>
             <div class="form-group">
                 <label for="descricao">Descrição:</label>
@@ -27,7 +27,7 @@
             <div class="form-group row">
                 <label for="imagem">Escolha uma imagem:</label>
                 <input type="file" id="imagem" name="imagem" class="from-control-file">
-                <img src="{{asset($produtos->imagem)}}" alt="" class="img-preview mx-auto"> <!-- Centralize a imagem -->
+                <img src="{{asset($produtos->imagem)}}" alt="" class="img-preview mx-auto">
             </div>
             <div class="d-flex justify-content-center mt-3">
                 <input type="submit" class="btn botao" value="Salvar">

@@ -19,9 +19,24 @@
     <link rel="icon" type="image/x-icon" href="/img/fav.png">
 </head>
 <body>
-  {{-- Navbar --}}
-
-
+   {{-- Navbar --}}
+   <header>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <!-- Link de início centralizado -->
+        <div class="mx-auto">
+          <a class="navbar-brand" href="{{ route('produto.dashboard') }}"><i class="fa-solid fa-house" style="color: #ffffff;"></i>  Início </a>
+        </div>
+        <!-- Links adicionais visíveis apenas em telas maiores -->
+        <div class="collapse navbar-collapse d-lg-block" id="navbar">
+          <ul class="navbar-nav mx-auto">
+            <!-- Adicione aqui os links adicionais se necessário -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  
   <div class="container mt-4">
     @yield('content')
   </div>

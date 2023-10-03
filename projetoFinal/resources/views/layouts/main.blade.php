@@ -24,7 +24,7 @@
     <nav class="navbar navbar-expand-lg">
       <div class="container">
         <div class="mx-auto">
-          <a class="navbar-brand" href="{{ route('produto.dashboard') }}"><i class="fa-solid fa-house" style="color: #ffffff;"></i>   </a>
+          <a class="navbar-brand" href="{{ route('produto.index') }}"><i class="fa-solid fa-house" style="color: #ffffff;"></i>   </a>
         </div>
       </div>
     </nav>

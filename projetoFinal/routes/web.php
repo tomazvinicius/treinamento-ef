@@ -9,7 +9,7 @@ Route::post('/produtos', [ProdutoController::class, 'store'])->name('produto.sto
 
 Route::get('/produtos', [ProdutoController::class, 'read'])->name('produto.read');
 
-Route::get('/produtos/dashboard', [ProdutoController::class, 'dashboard'])->name('produto.dashboard');
+Route::get('/', [ProdutoController::class, 'index'])->name('produto.index');
 
 Route::get('/produtos/editar/{produto}', [ProdutoController::class, 'edit'])->name('produto.edit');
 

@@ -11,18 +11,20 @@ class ProdutoController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $produtos = Produto::all();
+        return view('produtos/index', ['produtos' => $produtos]);
     }
 
     public function create()
     {
         $produtos = Produto::all();
-        return view('produtos-cadastrar', ['produtos' => $produtos]);
+        return view('produtos/create', ['produtos' => $produtos]);
     }
 
     // Armazenar dados.
     public function store(Request $request)
     {
+
         $rules = [
             'imagem' => 'image|required',
             'nome' => 'required',
@@ -47,62 +49,46 @@ class ProdutoController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
         $produto = Produto::create([
             'imagem' => $request->file('imagem')->store('imagens/produtos'),
             'nome' => $request->nome,
             'preco' => str_replace(',', '.', str_replace('.', '', $request->preco)),
-            'descricao' => $request->descricao,
             'kg' => str_replace(',', '.', $request->kg),
+            'descricao' => $request->descricao,
         ]);
         $produtos = Produto::all();
-        return view('dashboard', ['produtos' => $produtos]);
-    }
-
-    // Cards dos produtos
-    public function read()
-    {
-        $produtos = Produto::all();
-        return view('produtos-exibir', ['produtos' => $produtos]);
-    }
-
-    // Dashboard dos produtos
-    public function dashboard()
-    {
-        $produtos = Produto::all();
-        return view('dashboard', ['produtos' => $produtos]);
+        return view('produtos/index', ['produtos' => $produtos]);
     }
 
     // Editar produtos
     public function edit(Produto $produto)
     {
-        return view('produtos-editar', ['produtos' => $produto]);
+        return view('produtos/edit', ['produtos' => $produto]);
     }
 
     // Alterar produtos
     public function update(Request $request, Produto $produto)
     {
         $produto->nome = $request->nome;
-
         $produto->preco = str_replace(',', '.', str_replace('.', '', $request->preco));
-        $produto->kg = str_replace(',', '.', $request->kg);
         $produto->descricao = $request->descricao;
+        $produto->kg = str_replace(',', '.', $request->kg);
 
         if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
             $produto->imagem = $request->file('imagem')->store('imagens/produtos');
         }
 
         $produto->save();
-        return redirect()->route('produto.dashboard');
+        return redirect()->route('produto.index');
     }
 
     public function destroy(Produto $produto)
     {
         if ($produto->delete()) {
             Storage::delete($produto->imagem);
-            return redirect()->route('produto.dashboard')->with('msg', 'Produto excluído com sucesso');
+            return redirect()->route('produto.index')->with('msg', 'Produto excluído com sucesso');
         } else {
-            return redirect()->route('produto.dashboard')->with('error', 'Erro ao excluir o produto');
+            return redirect()->route('produto.index')->with('error', 'Erro ao excluir o produto');
         }
     }
 
@@ -110,7 +96,7 @@ class ProdutoController extends Controller
     {
         $produtos = Produto::all();
 
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf', compact('produtos'));
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('produtos/show', compact('produtos'));
 
         return $pdf->download('produtos.pdf');
     }

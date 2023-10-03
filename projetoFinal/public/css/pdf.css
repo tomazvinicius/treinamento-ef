@@ -36,6 +36,8 @@ body {
 
 .menu-item p {
     color: #555;
+    text-align: justify;
+    /* Justificar a descrição */
 }
 
 .menu-item strong {
@@ -44,5 +46,10 @@ body {
 
 .menu-item span {
     float: right;
+    color: #e63c80;
+}
+
+.menu-item .kg-label,
+.menu-item .preco-label {
     color: #e63c80;
 }

@@ -17,6 +17,10 @@
                 <input type="text" class="form-control" id="preco" name="preco" placeholder="Preço do produto" value="{{$produtos->preco}}">
             </div>
             <div class="form-group">
+                <label for="preco">Kg:</label>
+                <input type="text" class="form-control" id="kg" name="kg" placeholder="Kg do produto" value="{{$produtos->kg}}">
+            </div>
+            <div class="form-group">
                 <label for="descricao">Descrição:</label>
                 <textarea name="descricao" id="descricao" class="form-control" placeholder="Informe algo adicional:" style="resize: none;">{{$produtos->descricao}}</textarea>
             </div>

@@ -72,10 +72,8 @@ header {
     border-color: rgb(248, 142, 181);
 }
 
-
-
 .botao-relatorio {
-    background-color: rgb(255, 0, 93);
+    background-color: rgb(255, 0, 98);
     color: white;
 }
 
@@ -85,8 +83,16 @@ header {
     border-color: rgb(248, 142, 181);
 }
 
+.botao-cadastrar {
+    background-color: rgb(255, 0, 93);
+    color: white;
+}
 
-
+.botao-cadastrar:hover {
+    background-color: rgb(255, 255, 255);
+    color: rgb(255, 0, 93);
+    border-color: rgb(248, 142, 181);
+}
 
 
 /* Título de cada página */
@@ -157,7 +163,6 @@ header {
 
 .btn-delete {
     background-color: rgb(243, 52, 122);
-    margin-right: 5px;
     color: white;
 }
 

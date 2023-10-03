@@ -25,6 +25,14 @@
         </div>
 
         <div class="form-group mt-3 row">
+            <label class="row"for="kg">Kg:</label>
+            <input type="number" step="0.01" class="form-control" id="kg" name="kg" placeholder="Kg do produto" value="{{ old('kg') }}">
+            @error('kg')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="form-group mt-3 row">
             <label class="row" for="descricao">Descrição:</label>
             <textarea name="descricao" id="descricao" class="form-control" placeholder="Informe algo adicional:" style="resize: none;">{{ old('descricao') }}</textarea>
             @error('descricao')

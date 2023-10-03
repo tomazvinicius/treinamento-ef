@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Produto;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Produto;
 
 class ProdutoController extends Controller
 {
@@ -27,6 +27,7 @@ class ProdutoController extends Controller
             'imagem' => 'image|required',
             'nome' => 'required',
             'preco' => 'required|numeric',
+            'kg' => 'required|numeric',
             'descricao' => 'required|string',
         ];
 
@@ -34,6 +35,7 @@ class ProdutoController extends Controller
             'imagem.required' => 'A imagem é obrigatória.',
             'nome.required' => 'O nome é obrigatório.',
             'preco.required' => 'O preço é obrigatório.',
+            'kg.required' => 'O quilograma é obrigatório',
             'descricao.required' => 'A descrição é obrigatória.',
             'imagem.image' => 'O arquivo de imagem não é válido.',
         ];
@@ -51,9 +53,10 @@ class ProdutoController extends Controller
             'nome' => $request->nome,
             'preco' => $request->preco,
             'descricao' => $request->descricao,
+            'kg' => $request->kg,
         ]);
-
-        return redirect(route('produto.read'));
+        $produtos = Produto::all();
+        return view('dashboard', ['produtos' => $produtos]);
     }
 
     // Cards dos produtos

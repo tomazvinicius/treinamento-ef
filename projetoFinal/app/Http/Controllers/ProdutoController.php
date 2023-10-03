@@ -51,13 +51,13 @@ class ProdutoController extends Controller
         }
         $produto = Produto::create([
             'imagem' => $request->file('imagem')->store('imagens/produtos'),
-            'nome' => $request->nome,
+            'nome' => mb_strtoupper($request->nome),
             'preco' => str_replace(',', '.', str_replace('.', '', $request->preco)),
             'kg' => str_replace(',', '.', $request->kg),
             'descricao' => $request->descricao,
         ]);
-        $produtos = Produto::all();
-        return view('produtos/index', ['produtos' => $produtos]);
+
+        return redirect()->route('produto.index')->with('success', "Produto: {$produto->nome} cadastrado com sucesso!");
     }
 
     // Editar produtos
@@ -69,7 +69,7 @@ class ProdutoController extends Controller
     // Alterar produtos
     public function update(Request $request, Produto $produto)
     {
-        $produto->nome = $request->nome;
+        $produto->nome = mb_strtoupper($request->nome);
         $produto->preco = str_replace(',', '.', str_replace('.', '', $request->preco));
         $produto->descricao = $request->descricao;
         $produto->kg = str_replace(',', '.', $request->kg);
@@ -79,14 +79,15 @@ class ProdutoController extends Controller
         }
 
         $produto->save();
-        return redirect()->route('produto.index');
+
+        return redirect()->route('produto.index')->with('success', "Produto: {$produto->nome} atualizado com sucesso!");
     }
 
     public function destroy(Produto $produto)
     {
         if ($produto->delete()) {
             Storage::delete($produto->imagem);
-            return redirect()->route('produto.index')->with('msg', 'Produto excluído com sucesso');
+            return redirect()->route('produto.index')->with('success', 'Produto excluído com sucesso');
         } else {
             return redirect()->route('produto.index')->with('error', 'Erro ao excluir o produto');
         }

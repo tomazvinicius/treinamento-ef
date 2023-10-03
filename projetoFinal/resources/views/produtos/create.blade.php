@@ -19,7 +19,7 @@
     
             <div class="form-group mt-3 row">
                 <label class="row"for="preco">Preço:</label>
-                <input type="text" onkeyup="$(this).mask('000.000.000.000.000,00', {reverse: true})" class="form-control" id="preco" name="preco" placeholder="Preço do produto" value="{{ old('preco') }}">
+                <input type="tel" onkeyup="$(this).mask('##,00', {reverse: true})" maxlength="15"  class="form-control " id="preco" name="preco" placeholder="Preço do produto" value="{{ old('preco') }}">
                 @error('preco')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -27,7 +27,8 @@
     
             <div class="form-group mt-3 row">
                 <label class="row"for="kg">Kg:</label>
-                <input type="text" onkeyup="$(this).mask('00,00')"  class="form-control" id="kg" name="kg" placeholder="Kg do produto" value="{{ old('kg') }}">
+                
+                <input type="tel" onkeyup="$(this).mask('00,00')"  class="form-control" id="kg" name="kg" placeholder="Kg do produto" value="{{ old('kg') }}">
                 @error('kg')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror

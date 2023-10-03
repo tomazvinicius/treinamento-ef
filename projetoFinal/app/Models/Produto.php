@@ -14,4 +14,8 @@ class Produto extends Model
     protected $guarded = [];
     public $timestamps = false;
 
+    public function getPrecoFormatadoAttribute()
+    {
+        return number_format($this->preco, 2, ',', '.');
+    }
 }

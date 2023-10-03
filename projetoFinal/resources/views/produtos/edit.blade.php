@@ -14,11 +14,11 @@
             </div>
             <div class="form-group">
                 <label for="preco">Preço:</label>
-                <input type="text" onkeyup="$(this).mask('000.000.000.000.000,00', {reverse: true})" class="form-control" id="preco" name="preco" placeholder="Preço do produto" value="{{$produtos->preco}}">
+                <input type="tel" onkeyup="$(this).mask('##,00', {reverse: true})" maxlength="15" class="form-control" id="preco" name="preco" placeholder="Preço do produto" value="{{$produtos->preco_formatado}}" required>
             </div>
             <div class="form-group">
                 <label for="preco">Kg:</label>
-                <input type="text" onkeyup="$(this).mask('00,00')"  class="form-control" id="kg" name="kg" placeholder="Kg do produto" value="{{$produtos->kg}}">
+                <input type="tel" onkeyup="$(this).mask('00,00')"  class="form-control" id="kg" name="kg" placeholder="Kg do produto" value="{{$produtos->kg}}">
             </div>
             <div class="form-group">
                 <label for="descricao">Descrição:</label>

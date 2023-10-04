@@ -77,22 +77,6 @@
   </div>
 </div>
 </div>
-<!-- Modal de Confirmação -->
-<div class="modal" id="confirmacaoModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title">Erro ao emitir relatório</h5>
-          </div>
-          <div class="modal-body">
-              <p>Não há produtos para que seja possível emitir relatório.</p>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn botao" id="continuar">Continuar</button>
-          </div>
-      </div>
-  </div>
-</div>
 
 <script>
   // Função para filtrar a tabela com base no campo de pesquisa
@@ -118,22 +102,9 @@
     let produtosIds = $('table tbody tr:not(:hidden)').map(function(){
       return $(this).data('produto-id')
     })
-
-    if (produtosIds.length < 1){
-      modalRelatorioErro();
-    }
-
-    // FileSaver.saveAs(data, 'loteArquivosDigitais.' + ext);
+  
     url = '{{route('produto.pdf')}}/?ids[]=' + produtosIds.toArray().join('&ids[]=')
     window.open(url);
   })
-
-  function modalRelatorioErro(){
-    $('#confirmacaoModal').modal('show');
-    $('#continuar').on('click', function() {
-      $('#confirmacaoModal').modal('hide');
-    })
-  }
-
 </script>
 @endsection

@@ -15,13 +15,13 @@ class ProdutoController extends Controller
         return view('produtos/index', ['produtos' => $produtos]);
     }
 
+    // Armazenar dados.
     public function create()
     {
         $produtos = Produto::all();
         return view('produtos/create', ['produtos' => $produtos]);
     }
 
-    // Armazenar dados.
     public function store(Request $request)
     {
 
@@ -33,8 +33,6 @@ class ProdutoController extends Controller
             'descricao' => 'required',
         ];
 
-
-
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
@@ -42,6 +40,7 @@ class ProdutoController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+
         $produto = Produto::create([
             'imagem' => $request->file('imagem')->store('imagens/produtos'),
             'nome' => mb_strtoupper($request->nome),
@@ -59,7 +58,6 @@ class ProdutoController extends Controller
         return view('produtos/edit', ['produtos' => $produto]);
     }
 
-    // Alterar produtos
     public function update(Request $request, Produto $produto)
     {
         $request->validate([

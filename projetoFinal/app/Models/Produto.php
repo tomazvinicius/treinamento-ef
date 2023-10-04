@@ -21,6 +21,6 @@ class Produto extends Model
 
     public function getNomeFormatadoAttribute()
     {
-        return strtolower($this->nome);
+        return mb_strtolower($this->nome);
     }
 }

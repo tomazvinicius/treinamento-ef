@@ -35,18 +35,6 @@ header {
     background-color: var(--rosa-principal);
 }
 
-
-
-
-/* #navbar a:hover {
-    color: rgb(255, 255, 255);
-} */
-
-/* 
-.custom-link hover {
-    color: rgb(0, 0, 0);
-} */
-
 /* Botões */
 .botao {
     background-color: rgb(235, 118, 160);
@@ -95,7 +83,6 @@ header {
     border-color: rgb(248, 142, 181);
 }
 
-
 /* Título de cada página */
 .titulo {
     font-size: 2rem;
@@ -113,14 +100,6 @@ header {
 #cards-container {
     padding-top: 30px;
 }
-
-/* .row {
-    margin: 0;
-} */
-
-/* .container {
-    position: relative;
-} */
 
 /* Tabelas */
 .table thead th {
@@ -178,7 +157,7 @@ header {
 }
 
 .form-control {
-    border: 1px solid rgb(83, 25, 25);
+    border: 1.5px solid rgb(126, 40, 40);
     border-radius: 5px;
 }
 

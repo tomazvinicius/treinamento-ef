@@ -16,35 +16,42 @@
 
     {{--  CSS da aplicação  --}}
     <link rel="stylesheet" href="/css/app.css">
-    <link rel="icon" type="image/x-icon" href="/img/fav.png">
+    <link rel="icon" type="image/x-icon" href="/logo.svg">
+
 </head>
 <body>
-   {{-- Navbar --}}
-   <header>
-    <nav class="navbar navbar-expand-lg">
-      <div class="container">
-        <div class="mx-auto">
-          <a class="navbar-brand" href="{{ route('produto.index') }}"><i class="fa-solid fa-house" style="color: #ffffff;"></i>   </a>
+     {{-- Navbar --}}
+     <header>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <div class="mx-auto">
+            <a class="navbar-brand" href="{{ route('produto.index') }}"><i class="fa-solid fa-cookie-bite fa-xl" style="color: #ffffff;"></i>   </a>
+          </div>
         </div>
-      </div>
-    </nav>
-  </header>
-  
+      </nav>
+    </header>
+  {{-- Mensagem de sucesso --}}
   <div class="container mt-4">
     @if (session('success'))
-    <div class="alert alert-success" role="alert">
-        {{ session('success') }}
-    </div>
+      <div class="alert alert-success" role="alert">
+          {{ session('success') }}
+      </div>
     @endif
-
-    @if (session('danger'))
-    <div class="alert alert-danger" role="alert">
-        {{ session('danger') }}
-    </div>
+    @if (session('error'))
+      <div class="alert alert-danger" role="alert">
+          {{ session('error') }}
+      </div>
     @endif
 
     @yield('content')
   </div>
+
+  {{-- Footer --}}
+  <footer class="text-center mt-4">
+    <p>Leninha Doceria Artesanal &copy; 2023</p>
+  </footer>
+
+</body>
 
   {{-- Fechar notificação --}}
   <script>
@@ -55,11 +62,23 @@
     });
     </script>
 
-  {{-- Footer --}}
-  <footer class="text-center mt-4">
-    <p>Leninha Doceria Artesanal &copy; 2023</p>
-  </footer>
-
+<script>
+  (function () {
+  'use strict'
+  const forms = document.querySelectorAll('.requires-validation')
+  Array.from(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+      if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+      }
+    
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+  </script>
   {{-- Script Bootstrap --}}
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
@@ -68,5 +87,4 @@
 
   {{-- Icones Awesome --}}
   <script src="https://kit.fontawesome.com/8b1a4d86ba.js" crossorigin="anonymous"></script>
-</body>
 </html>

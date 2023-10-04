@@ -43,7 +43,7 @@ class ProdutoController extends Controller
         }
 
         $produto = Produto::create([
-            'imagem' => $request->file('imagem')->store('imagens/produtos'),
+            'imagem' => $request->file('imagem')->storePublicly('produtos', 'public'),
             'nome' => mb_strtoupper($request->nome),
             'preco' => str_replace(',', '.', str_replace('.', '', $request->preco)),
             'kg' => str_replace(',', '.', $request->kg),
@@ -75,7 +75,7 @@ class ProdutoController extends Controller
         $produto->kg = str_replace(',', '.', $request->kg);
 
         if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
-            $produto->imagem = $request->file('imagem')->store('imagens/produtos');
+            $produto->imagem = $request->file('imagem')->storePublicly('produtos', 'public');
         }
 
         $produto->save();
@@ -86,7 +86,7 @@ class ProdutoController extends Controller
     public function destroy(Produto $produto)
     {
         if ($produto->delete()) {
-            Storage::delete($produto->imagem);
+            Storage::delete("public/{$produto->imagem}");
             return redirect()->route('produto.index')->with('success', 'Produto excluído com sucesso');
         } else {
             return redirect()->route('produto.index')->with('error', 'Erro ao excluir o produto');
@@ -100,7 +100,23 @@ class ProdutoController extends Controller
         if (!$ids)
             return abort(404);
 
-        $produtos = Produto::find($ids);
+        $produtos = Produto::whereIn('id', $ids)
+            ->orderBy('nome')
+            ->get()
+            ->map(function ($p) {
+                $extension = pathinfo($p->imagem, PATHINFO_EXTENSION);
+                $dataImage = "data:image/{$extension};base64,";
+
+                return (object) [
+                    'id' => $p->id,
+                    'nome' => $p->nome,
+                    'descricao' => $p->descricao,
+                    'nome_formatado' => $p->nome_formatado,
+                    'kg' => $p->kg,
+                    'preco' => $p->preco,
+                    'logo' => $dataImage . base64_encode(file_get_contents(public_path("storage/{$p->imagem}")))
+                ];
+            });
 
         $pdf = Pdf::loadView('produtos/show', compact('produtos'));
 

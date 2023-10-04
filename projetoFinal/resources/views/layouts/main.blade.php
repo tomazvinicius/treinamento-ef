@@ -29,36 +29,44 @@
       </div>
     </nav>
   </header>
+  
   <div class="container mt-4">
-    @if (session()->has('success'))
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
+    @if (session('success'))
+    <div class="alert alert-success" role="alert">
         {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
+    </div>
     @endif
 
-    @if (session()->has('error'))
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        {{ session('error') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
+    @if (session('danger'))
+    <div class="alert alert-danger" role="alert">
+        {{ session('danger') }}
+    </div>
     @endif
 
     @yield('content')
   </div>
+
+  {{-- Fechar notificação --}}
+  <script>
+    $(document).ready(function() {
+        $(".alert").delay(2000).slideUp(200, function() {
+            $(this).alert('close');
+        });
+    });
+    </script>
 
   {{-- Footer --}}
   <footer class="text-center mt-4">
     <p>Leninha Doceria Artesanal &copy; 2023</p>
   </footer>
 
-  {{-- Fonte Awesome --}}
+  {{-- Script Bootstrap --}}
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
-  {{-- Fonte Awesome --}}
+  {{-- Script Jquery --}}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.js" integrity="sha512-0XDfGxFliYJPFrideYOoxdgNIvrwGTLnmK20xZbCAvPfLGQMzHUsaqZK8ZoH+luXGRxTrS46+Aq400nCnAT0/w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  {{-- Fonte Awesome --}}
+  {{-- Icones Awesome --}}
   <script src="https://kit.fontawesome.com/8b1a4d86ba.js" crossorigin="anonymous"></script>
 </body>
 </html>

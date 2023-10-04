@@ -33,16 +33,9 @@ class ProdutoController extends Controller
             'descricao' => 'required',
         ];
 
-        $messages = [
-            'imagem.required' => 'A imagem é obrigatória.',
-            'nome.required' => 'O nome é obrigatório.',
-            'preco.required' => 'O preço é obrigatório.',
-            'kg.required' => 'O quilograma é obrigatório',
-            'descricao.required' => 'A descrição é obrigatória.',
-            'imagem.image' => 'O arquivo de imagem não é válido.',
-        ];
 
-        $validator = Validator::make($request->all(), $rules, $messages);
+
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return redirect(route('produto.create'))

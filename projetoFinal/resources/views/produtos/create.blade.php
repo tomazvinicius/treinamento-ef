@@ -12,32 +12,20 @@
             <div class="form-group mt-3 row">
                 <label class="col-12" for="nome">Nome:</label>
                 <input type="text" class="form-control col-12 @error('nome') is-invalid @enderror" id="nome" name="nome" placeholder="Nome do produto" value="{{ old('nome') }}">
-                @error('nome')
-                <div class="text-danger col-12">{{ $message }}</div>
-                @enderror
             </div>
 
             <div class="form-group mt-3 row">
                 <label class="col-12" for="preco">Preço:</label>
                 <input type="tel" onkeyup="$(this).mask('##,00', {reverse: true})" maxlength="15" class="form-control col-12 @error('preco') is-invalid @enderror" id="preco" name="preco" placeholder="Preço do produto" value="{{ old('preco') }}">
-                @error('preco')
-                <div class="text-danger col-12">{{ $message }}</div>
-                @enderror
             </div>
 
             <div class="form-group mt-3 row">
                 <label class="col-12" for="kg">Kg:</label>
                 <input type="tel" onkeyup="$(this).mask('00,00')" class="form-control col-12 @error('kg') is-invalid @enderror" id="kg" name="kg" placeholder="Kg do produto" value="{{ old('kg') }}">
-                @error('kg')
-                <div class="text-danger col-12">{{ $message }}</div>
-                @enderror
             </div>
             <div class="form-group mt-3 row">
                 <label class="col-12" for="descricao">Descrição:</label>
                 <textarea name="descricao" id="descricao" class="form-control col-12 @error('descricao') is-invalid @enderror" placeholder="Informe algo adicional:" style="resize: none;">{{ old('descricao') }}</textarea>
-                @error('descricao')
-                <div class="text-danger col-12">{{ $message }}</div>
-                @enderror
             </div>
             <div class="form-group mt-3 row">
                 <label class="col-12" for="imagem">Selecione uma imagem:</label>

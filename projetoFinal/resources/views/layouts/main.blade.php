@@ -87,4 +87,6 @@
 
   {{-- Icones Awesome --}}
   <script src="https://kit.fontawesome.com/8b1a4d86ba.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </html>

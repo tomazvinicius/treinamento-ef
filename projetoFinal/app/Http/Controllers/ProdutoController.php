@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
@@ -92,12 +93,17 @@ class ProdutoController extends Controller
         }
     }
 
-    public function gerarPDF()
+    public function gerarPDF(Request $request)
     {
-        $produtos = Produto::all();
+        $ids = $request->get('ids');
 
-        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('produtos/show', compact('produtos'));
+        if (!$ids)
+            return abort(404);
 
-        return $pdf->download('produtos.pdf');
+        $produtos = Produto::find($ids);
+
+        $pdf = Pdf::loadView('produtos/show', compact('produtos'));
+
+        return $pdf->stream('produtos.pdf');
     }
 }

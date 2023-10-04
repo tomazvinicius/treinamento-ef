@@ -14,7 +14,7 @@
 
     @foreach ($produtos as $produto)
         <div class="menu-item">
-            <img src="{{ $produto->imagem }}" alt="{{ $produto->nome }}" class="produto-imagem">
+            {{-- <img src="{{ $produto->imagem }}" alt="{{ $produto->nome }}" class="produto-imagem"> --}}
             <h2>{{ $produto->nome_formatado }}</h2>
             <p>{{ $produto->descricao }}</p>
             <p><strong class="kg-label">KG:</strong> {{ $produto->kg }} kg</p>

@@ -7,7 +7,7 @@
   <div class="row mt-4 mb-2">
 
     <div class="col-md-6 text-start mb-2">
-      <a class="btn botao-relatorio mb-2" href="{{ route('produto.pdf') }}"><i class="fa-sharp fa-regular fa-floppy-disk pr-2"></i>  Emitir relatório</a>
+      <a class="btn botao-relatorio mb-2" id="gerar-pdf"><i class="fa-sharp fa-regular fa-floppy-disk pr-2"></i>  Emitir relatório </a>
       <a class="btn botao-cadastrar mb-2 " href="{{ route('produto.create') }}"><i class="fa-sharp fa-regular fa-plus pr-2"></i>  Cadastrar produto</a>
     </div>
 
@@ -31,7 +31,7 @@
       </thead>
       <tbody>
         @foreach ($produtos as $produto)
-        <tr>
+        <tr data-produto-id="{{$produto->id}}">
           <td>{{ $produto->nome_formatado }}</td>
           <td>R$ {{$produto->preco}}</td>
           <td> {{$produto->kg}} kg</td>
@@ -77,15 +77,31 @@
   </div>
 </div>
 </div>
+<!-- Modal de Confirmação -->
+<div class="modal" id="confirmacaoModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Erro ao emitir relatório</h5>
+          </div>
+          <div class="modal-body">
+              <p>Não há produtos para que seja possível emitir relatório.</p>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn botao" id="continuar">Continuar</button>
+          </div>
+      </div>
+  </div>
+</div>
 
 <script>
   // Função para filtrar a tabela com base no campo de pesquisa
   $('#search').on('keyup', function() {
-    var searchText = $(this).val().toLowerCase();
+    var searchText = $(this).val().toUpperCase();
 
     if (searchText.length > 3) {
       $('table tbody tr').each(function() {
-        var textoTabela = $(this).find('td:first').text().toLowerCase().trim();
+        var textoTabela = $(this).find('td:first').text().toUpperCase().trim();
 
         if (textoTabela.indexOf(searchText) === -1) {
           $(this).hide();
@@ -97,5 +113,27 @@
       $('table tbody tr').show();
     }
   });
+
+  $('#gerar-pdf').click(function(){
+    let produtosIds = $('table tbody tr:not(:hidden)').map(function(){
+      return $(this).data('produto-id')
+    })
+
+    if (produtosIds.length < 1){
+      modalRelatorioErro();
+    }
+
+    // FileSaver.saveAs(data, 'loteArquivosDigitais.' + ext);
+    url = '{{route('produto.pdf')}}/?ids[]=' + produtosIds.toArray().join('&ids[]=')
+    window.open(url);
+  })
+
+  function modalRelatorioErro(){
+    $('#confirmacaoModal').modal('show');
+    $('#continuar').on('click', function() {
+      $('#confirmacaoModal').modal('hide');
+    })
+  }
+
 </script>
 @endsection

@@ -26,11 +26,11 @@ class ProdutoController extends Controller
     {
 
         $rules = [
-            'imagem' => 'image|required',
-            'nome' => 'required',
+            'imagem' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'nome' => 'required|max:255',
             'preco' => 'required',
             'kg' => 'required',
-            'descricao' => 'required|string',
+            'descricao' => 'required',
         ];
 
         $messages = [
@@ -69,6 +69,14 @@ class ProdutoController extends Controller
     // Alterar produtos
     public function update(Request $request, Produto $produto)
     {
+        $request->validate([
+            'nome' => 'required|max:255',
+            'preco' => 'required',
+            'kg' => 'required',
+            'descricao' => 'required',
+            'imagem' => 'image|mimes:jpeg,png,jpg|max:2048'
+        ]);
+
         $produto->nome = mb_strtoupper($request->nome);
         $produto->preco = str_replace(',', '.', str_replace('.', '', $request->preco));
         $produto->descricao = $request->descricao;

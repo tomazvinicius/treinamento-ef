@@ -29,7 +29,7 @@
       <tbody>
         @foreach ($produtos as $produto)
         <tr>
-          <td>{{$produto->nome}}</td>
+          <td>{{ $produto->nome_formatado }}</td>
           <td>R$ {{$produto->preco}}</td>
           <td> {{$produto->kg}} kg</td>
           <td>{{$produto->descricao}}</td>

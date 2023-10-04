@@ -18,4 +18,9 @@ class Produto extends Model
     {
         return number_format($this->preco, 2, ',', '.');
     }
+
+    public function getNomeFormatadoAttribute()
+    {
+        return strtolower($this->nome);
+    }
 }

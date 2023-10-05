@@ -84,11 +84,9 @@
   // Função para filtrar a tabela com base no campo de pesquisa
   $('#search').on('keyup', function() {
     var searchText = $(this).val().toUpperCase();
-
     if (searchText.length > 3) {
       $('table tbody tr').each(function() {
-        var textoTabela = $(this).find('td:first').text().toUpperCase().trim();
-
+        var textoTabela = $(this).find('td').text().toUpperCase().trim();
         if (textoTabela.indexOf(searchText) === -1) {
           $(this).hide();
         } else {

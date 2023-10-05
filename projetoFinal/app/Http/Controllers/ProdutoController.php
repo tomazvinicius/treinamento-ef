@@ -56,7 +56,29 @@ class ProdutoController extends Controller
     // Editar produtos
     public function edit(Produto $produto)
     {
+
+
+
+        // $produtos = Produto::whereIn('id', $produto)
+        //     ->get()
+        //     ->map(function ($p) {
+        //         $extension = pathinfo($p->imagem, PATHINFO_EXTENSION);
+        //         $dataImage = "data:image/{$extension};base64,";
+
+        //         return (object) [
+        //             'id' => $p->id,
+        //             'nome' => $p->nome,
+        //             'descricao' => $p->descricao,
+        //             'nome_formatado' => $p->nome_formatado,
+        //             'kg' => $p->kg,
+        //             'preco' => $p->preco,
+        //             'logo' => $dataImage . base64_encode(file_get_contents(public_path("storage/{$p->imagem}")))
+        //         ];
+        //     });
+        // dd($produtos);
+
         return view('produtos/edit', ['produtos' => $produto]);
+
     }
 
     public function update(Request $request, Produto $produto)
@@ -120,6 +142,7 @@ class ProdutoController extends Controller
 
         $pdf = Pdf::loadView('produtos/show', compact('produtos'));
 
-        return $pdf->stream('produtos.pdf');
+        // return $pdf->stream('produtos.pdf');
+        return $pdf->download('produtos.pdf');
     }
 }

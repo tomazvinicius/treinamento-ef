@@ -151,10 +151,11 @@ header {
     border: 1px solid rgb(243, 52, 122);
 }
 
-.btn-cancelar {
-    background-color: rgb(247, 241, 244);
-    color: white;
+.btn-cancelar:hover {
+    border: 1px solid #e63c80;
+    color: #e63c80;
 }
+
 
 .form-control {
     border: 1.5px solid rgb(126, 40, 40);

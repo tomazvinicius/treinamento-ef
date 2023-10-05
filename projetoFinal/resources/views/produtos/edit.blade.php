@@ -51,16 +51,10 @@
                     <input type="file" id="imagem" name="imagem" class="form-control-file col-12">
                     <div class="d-flex align-items-center">
                     @if ($produtos->imagem)
-                    <?php
-                    $caminhoImagem = public_path("storage/{$produtos->imagem}");
-                    $extension = pathinfo($caminhoImagem, PATHINFO_EXTENSION);
-                    $dataImage = "data:image/{$extension};base64,";
-                    $imagemBase64 = $dataImage . base64_encode(file_get_contents($caminhoImagem));
-                    ?>
-                    <img src="{{ $imagemBase64 }}" alt="" class="img-preview mx-auto">
-                @else
-                    <p>Nenhuma imagem selecionada.</p>
-                @endif
+                    <img src="{{ $produtos->base64() }}" alt="" class="img-preview mx-auto">
+                    @else
+                        <p>Nenhuma imagem selecionada.</p>
+                    @endif
                         </div>
                     @error('imagem')
                     <div class="text-danger col-12">{{ $message }}</div>

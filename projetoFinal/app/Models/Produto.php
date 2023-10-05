@@ -23,4 +23,13 @@ class Produto extends Model
     {
         return mb_strtolower($this->nome);
     }
+
+    public function base64()
+    {
+        $caminhoImagem = public_path("storage/{$this->imagem}");
+        $extension = pathinfo($caminhoImagem, PATHINFO_EXTENSION);
+        $dataImage = "data:image/{$extension};base64,";
+
+        return $dataImage . base64_encode(file_get_contents($caminhoImagem));
+    }
 }

@@ -7,7 +7,7 @@
   <div class="row mt-4 mb-2">
 
     <div class="col-md-6 text-start mb-2">
-      <a class="btn botao-relatorio mb-2" id="gerar-pdf"><i class="fa-sharp fa-regular fa-floppy-disk pr-2"></i>  Emitir relatório </a>
+      <a class="btn botao-relatorio mb-2" id="gerar-pdf"><i class="fa-sharp fa-regular fa-floppy-disk pr-2"></i>  Emitir cardapio </a>
       <a class="btn botao-cadastrar mb-2 " href="{{ route('produto.create') }}"><i class="fa-sharp fa-regular fa-plus pr-2"></i>  Cadastrar produto</a>
     </div>
 
@@ -22,6 +22,7 @@
     <table class="table">
       <thead class="table-head">
         <tr>
+          <th scope="col" align="center">Foto</th>
           <th scope="col">Nome do produto</th>
           <th scope="col">Preço</th>
           <th scope="col">KG</th>
@@ -32,11 +33,12 @@
       <tbody>
         @foreach ($produtos as $produto)
         <tr data-produto-id="{{$produto->id}}">
-          <td>{{ $produto->nome_formatado }}</td>
-          <td>R$ {{$produto->preco}}</td>
-          <td> {{$produto->kg}} kg</td>
-          <td>{{$produto->descricao}}</td>
-          <td>
+          <td style="width: 75px"> <img style="width: 50px; height: 50px; border-radius: 100%" src="{{$produto->base64()}}"></td>
+          <td class="align-middle">{{ $produto->nome_formatado }}</td>
+          <td class="align-middle">R$ {{$produto->preco}}</td>
+          <td class="align-middle"> {{$produto->kg}} kg</td>
+          <td class="align-middle">{{$produto->descricao}}</td>
+          <td class="align-middle">
             <div class="btn-group  action-buttons" role="group">
               {{-- Botão de editar --}}
               <a href="/produtos/editar/{{$produto->id}}" class="btn btn-action-edit "><i class="fa-solid fa-pencil fa-lg "></i></a>

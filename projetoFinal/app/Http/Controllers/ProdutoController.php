@@ -120,7 +120,7 @@ class ProdutoController extends Controller
 
         $pdf = Pdf::loadView('produtos/show', compact('produtos'));
 
-        // return $pdf->stream('produtos.pdf');
-        return $pdf->download('produtos.pdf');
+        return $pdf->stream('produtos.pdf');
+        // return $pdf->download('produtos.pdf');
     }
 }

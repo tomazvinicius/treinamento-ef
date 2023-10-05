@@ -7,7 +7,7 @@
   <div class="row mt-4 mb-2">
 
     <div class="col-md-6 text-start mb-2">
-      <a class="btn botao-relatorio mb-2" id="gerar-pdf"><i class="fa-sharp fa-regular fa-floppy-disk pr-2"></i>  Emitir cardapio </a>
+      <a class="btn botao-relatorio mb-2" id="gerar-pdf"><i class="fa-sharp fa-regular fa-floppy-disk pr-2"></i>  Emitir cardápio </a>
       <a class="btn botao-cadastrar mb-2 " href="{{ route('produto.create') }}"><i class="fa-sharp fa-regular fa-plus pr-2"></i>  Cadastrar produto</a>
     </div>
 
